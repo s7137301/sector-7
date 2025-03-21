@@ -1,0 +1,593 @@
+:root {
+    --background-dark: #2b2b2b; /* Dark background */
+    --text-dark: #ddd;          /* Light text for dark mode */
+    --background-light: #ffffff; /* White background for light mode */
+    --text-light: #2b2b2b;      /* Dark text for light mode */
+    --header-light-purple: #9166cc; /* Lighter purple */
+    --highlight-green: #5bc236;  /* Green for hover effects */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-dark); /* Default is dark mode */
+    color: var(--text-dark);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    background-color: var(--header-light-purple);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+nav {
+    background-color: #444;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+nav a {
+    color: var(--header-light-purple);
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--highlight-green);
+    text-decoration: underline;
+}
+
+section {
+    padding: 20px;
+}
+
+footer {
+    background-color: var(--header-light-purple);
+    text-align: center;
+    padding: 10px;
+    color: white;
+    margin-top: 20px;
+}
+
+/* Light mode styles */
+body.light-mode {
+    background-color: var(--background-light);
+    color: var(--text-light);
+}
+
+body.light-mode nav a {
+    color: var(--header-light-purple);
+}
+
+
+.logo {
+    max-width: 150px; /* Adjust size as needed */
+    height: auto;
+}
+.logo-container {
+    background-color: #9166cc; /* Matching the lighter purple */
+    text-align: center;
+    padding: 10px;
+}
+
+nav a {
+    color: #9166cc; /* Matching the same lighter purple for links */
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    background-color: #9166cc; /* Uniform footer purple */
+    text-align: center;
+    padding: 10px;
+    color: white;
+    margin-top: 20px;
+}
+.download-file {
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #5e3089;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.download-file:hover {
+    background-color: #4a256e;
+}
+.reports-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    color: #2b2b2b;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.light-mode .reports-container {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.report-item {
+    border-bottom: 1px solid #ddd; /* Divider between reports */
+    padding: 15px 0;
+}
+
+.report-item:last-child {
+    border-bottom: none; /* Remove border for the last report */
+}
+
+.report-item h3 {
+    margin: 0;
+    color: #5e3089; /* Purple heading */
+}
+
+.report-item p {
+    margin: 5px 0 15px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.report-item .read-more {
+    text-decoration: none;
+    color: #5e3089;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid #5e3089;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.report-item .read-more:hover {
+    background-color: #5e3089;
+    color: #fff;
+}
+#faq {
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Arial, sans-serif;
+}
+
+.faq-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    background-color: #5e3089; /* Purple matching your site theme */
+    color: white;
+    padding: 15px;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.faq-question:hover {
+    background-color: #4a256e;
+}
+
+.arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.faq-item.open .arrow {
+    transform: rotate(180deg); /* Rotate arrow upwards when open */
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    padding: 0 15px;
+    transition: max-height 0.3s ease-out;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.faq-answer p {
+    margin: 10px 0;
+}
+
+.faq-item.open .faq-answer {
+    max-height: 200px; /* Adjust based on content length */
+    padding: 15px; /* Add padding when open */
+}
+.banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #5e3089; /* Purple theme matching the rest of the site */
+    color: white;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Make sure it stays on top */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /* Ensures padding doesn't affect banner width */
+}
+
+.banner p {
+    margin: 0;
+    font-size: 0.9rem;
+    flex: 1; /* Ensures the text takes up available space */
+}
+
+.banner a {
+    color: #ffcc00; /* Highlighted link color */
+    text-decoration: underline;
+}
+
+.banner a:hover {
+    color: #ffd633; /* Slight hover effect for the link */
+}
+
+.close-banner {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    align-self: flex-start; /* Aligns the button to the top of the banner */
+}
+
+.close-banner:hover {
+    color: #ffcc00;
+}
+.status-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.status-container h2 {
+    color: #5e3089; /* Purple theme */
+    margin-bottom: 20px;
+}
+
+.status-item {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.status-item h3 {
+    color: #5e3089; /* Purple theme */
+    margin: 0 0 10px;
+}
+
+.status-label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.status-link {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #5e3089;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.status-link:hover {
+    background-color: #4a256e;
+}
+.status-label span {
+    font-weight: bold;
+    animation: checking 1s linear infinite; /* Optional blinking effect for "Checking..." */
+}
+
+@keyframes checking {
+    50% {
+        opacity: 0.5;
+    }
+}
+#maintenance-timer-section {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+#maintenance-timer-section h2 {
+    color: #d9534f; /* Red theme for urgency */
+}
+
+#maintenance-timer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #5e3089; /* Purple theme */
+    margin-top: 10px;
+}
+/* Fullscreen Modal Splash Screen */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(217, 83, 79, 0.8); /* Semi-transparent red overlay */
+    backdrop-filter: blur(5px); /* Blur effect for the background */
+    z-index: 9999; /* Ensure it covers everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Content Box Inside Modal */
+.splash-content {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 80%;
+}
+
+/* Heading and Text */
+.splash-content h1 {
+    color: #d9534f; /* Red for urgency */
+    margin-bottom: 15px;
+}
+
+.splash-content p {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+/* Dismiss Button */
+.dismiss-button {
+    background-color: #d9534f; /* Red button matching the splash theme */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dismiss-button:hover {
+    background-color: #c9302c; /* Darker red on hover */
+}
+/* Fullscreen Container for the Maintenance Message */
+.maintenance-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Heading */
+.maintenance-container h1 {
+    font-size: 2.5rem;
+    color: #d9534f; /* Red for urgency */
+    margin-bottom: 15px;
+}
+
+/* Paragraphs */
+.maintenance-container p {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Home Button */
+.home-button {
+    background-color: #5e3089; /* Purple theme */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+.home-button:hover {
+    background-color: #4a256e; /* Darker purple on hover */
+}
+.maintenance-container h1 {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+.article-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.article-container h2, .article-container h3 {
+    color: #5e3089; /* Purple theme */
+}
+
+.article-container p {
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.article-container ul {
+    margin-left: 20px;
+}
+
+.article-container ul li {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.back-button {
+    display: block;
+    margin: 20px 0 0;
+    padding: 10px 20px;
+    background-color: #5e3089;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.back-button:hover {
+    background-color: #4a256e;
+}
+ul li {
+    color: #5e3089; /* Purple, matching the site's theme */
+    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1.5; /* Better spacing */
+}
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #5e3089; /* Purple theme */
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #ffd633; /* Yellow hover effect */
+}
+/* Base Styles */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #f5f5f5;
+    background-color: #1a1a1a; /* Dark theme background */
+    text-align: center;
+  }
+  
+  /* Header */
+  h1 {
+    font-size: 2.5rem;
+    color: #5e3089; /* Sector-7's purple theme accent */
+    margin-top: 20px;
+  }
+  
+  /* Form Styles */
+  #turnstile-form {
+    background: #292929; /* Slightly lighter than the page background */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a polished effect */
+    display: inline-block;
+    margin: 40px auto;
+    max-width: 400px;
+    width: 90%;
+  }
+  
+  #turnstile-form p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #e0e0e0; /* Light text for contrast */
+  }
+  
+  /* Turnstile Widget */
+  .cf-turnstile {
+    margin: 20px 0;
+    display: block;
+  }
+  
+  /* Button Styles */
+  button {
+    background: #5e3089; /* Sector-7's accent color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #4a236b; /* Slightly darker purple for hover effect */
+  }
+  
+  button:active {
+    background: #351a4d; /* Even darker on click */
+  }
+  
+  /* Mobile-Friendly Design */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+  
+    #turnstile-form {
+      padding: 15px;
+    }
+  
+    button {
+      width: 100%; /* Full-width button on smaller screens */
+      font-size: 1rem;
+    }
+  }
+  

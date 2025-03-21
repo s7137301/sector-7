@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Status - Sector-7</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Maintenance Banner -->
+    <!--<div id="maintenance-banner" class="banner">
+        <p>Our Clearnet site is currently undergoing maintenance. Please use our Onion sites for now or our backup clearnet site.</p>
+        <button class="close-banner" onclick="closeBanner()">&#10005;</button> -->
+
+    <!-- Notice Banner -->
+    <div id="notice-banner" class="banner">
+        <p>For enhanced security and anonymity, we recommend accessing this site via the Tor Browser. 
+            <a href="https://www.torproject.org/download/" target="_blank">Download Tor Browser</a>.
+        </p>
+        <button class="close-banner" onclick="closeBanner()">&#10005;</button>
+    </div>
+
+    <!-- Logo Container -->
+    <div class="logo-container">
+        <img src="Sector-7.png" alt="Sector-7 Logo" class="logo">
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>Sector-7 Status Page</h1>
+        <p>Check the current status of our Main Onion, Backup Onion, and Clearnet sites.</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="reports.html">Reports</a>
+        <a href="about.html">About</a>
+        <a href="support.html">Support</a>
+        <a href="status.html">Website Status</a>
+    </nav>
+
+    <!-- Status Section -->
+    <section class="status-container">
+        <h2>Site Status</h2>
+        
+        <!-- Main Onion Site Status -->
+        <div class="status-item">
+            <h3>Main Onion Site</h3>
+            <p class="status-label">Status: <span id="main-onion-status" style="color: green;">Online</span></p>
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank" class="status-link">
+                Access Main Onion Site
+            </a>
+        </div>
+        
+        <!-- Backup Onion Site Status -->
+        <div class="status-item">
+            <h3>Backup Onion Site</h3>
+            <p class="status-label">Status: <span id="backup-onion-status" style="color: green;">Online</span></p>
+            <a href="http://xhr6hchckoszmswtvwy3hjpnysmwl7tuwz7hp5c5fdndfvt42xvt67yd.onion" target="_blank" class="status-link">
+                Access Backup Onion Site
+            </a>
+        </div>
+        
+        <!-- Main Clearnet Site Status -->
+        <div class="status-item">
+            <h3>Main Clearnet Site</h3>
+            <p class="status-label">Status: <span id="clearnet-status" style="color: yellow;">Outdated</span></p>
+            <a href="https://sector-7.ct.ws" target="_blank" class="status-link">
+                Access Clearnet Site
+            </a>
+        </div>
+        
+        <!-- Backup Clearnet Site Status -->
+        <div class="status-item">
+            <h3>Backup Clearnet Site</h3>
+            <p class="status-label">Status: <span id="backup-clearnet-status" style="color: green;">Online</span></p>
+            <a href="https://sector-7.pages.dev" target="_blank" class="status-link">
+                Access Backup Clearnet Site
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Sector-7. All rights reserved.</p>
+        <nav>
+            <a href="home.html">Home</a> | 
+            <a href="about.html">About</a> | 
+            <a href="support.html">Support</a> | 
+            <a href="reports.html">Published Reports</a> | 
+            <a href="status.html">Website Status</a>
+        </nav>
+        <p>Our Official Onion Address: 
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">
+                3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion
+            </a>
+        </p>
+    </footer>
+</body>
+</html>

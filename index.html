@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Sector-7|DDOS Protection</title>
+</head>
+<body>
+  <h1>Sector-7|DDOS Protection</h1>
+  <form id="turnstile-form">
+    <p>Complete the CAPTCHA to proceed:</p>
+    <!-- Example for Cloudflare Turnstile -->
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAABBp8DDATkRt9PbP"></div>
+    <button type="button" onclick="handleRedirect()">Submit</button>
+  </form>
+   <script src="turnstile.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script>
+    function handleRedirect() {
+      // Simulate successful Turnstile completion
+      window.location.href = "home.html"; // Redirects to home.html
+    }
+  </script>
+</body>
+</html>
