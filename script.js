@@ -82,10 +82,10 @@ function simulateChecking(elementId, actualStatus, color, delay = 2000) {
 // Simulate status for all sites
 document.addEventListener('DOMContentLoaded', () => {
     // Main Onion Site
-    simulateChecking('main-onion-status', 'Online', 'green');
+    simulateChecking('main-onion-status', 'OFFLINE', 'red');
     
     // Backup Onion Site
-    simulateChecking('backup-onion-status', 'Online', 'green');
+    simulateChecking('backup-onion-status', 'OFFLINE', 'red');
     
     // Clearnet Site
     simulateChecking('clearnet-status', 'Online', 'green');
