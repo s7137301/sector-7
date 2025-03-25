@@ -87,8 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Backup Onion Site
     simulateChecking('backup-onion-status', 'OFFLINE', 'red');
     
-    // Clearnet Site
-    simulateChecking('clearnet-status', 'Online', 'green');
+    // Main Clearnet Site
+    simulateChecking('main-clearnet-status', 'Online', 'green');
+     // Backup Clearnet Site
+    simulateChecking('backup-clearnet-status', 'OUTDATED', 'yellow');
+    
 });
 document.addEventListener('DOMContentLoaded', () => {
     // Set the end date and time for maintenance in Brisbane time
