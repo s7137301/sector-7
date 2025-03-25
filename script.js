@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     simulateChecking('backup-onion-status', 'OFFLINE', 'red');
     
     // Main Clearnet Site
-    simulateChecking('main-clearnet-status', 'Online', 'green');
+    simulateChecking('main-clearnet-status', 'ONLINE', 'green');
      // Backup Clearnet Site
     simulateChecking('backup-clearnet-status', 'OUTDATED', 'yellow');
     
