@@ -590,60 +590,80 @@ body {
       font-size: 1rem;
     }
   }
+
+
+/* Container for Resources */
 .resources-container {
-    width: 80%;
+    width: 90%;
+    max-width: 1100px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--background-light); /* Uses white from variables */
+    color: var(--text-light); /* Dark text for contrast */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Header Styling */
 .resources-container h2 {
-    color: #333333;
-    border-bottom: 2px solid #721c24;
+    color: var(--header-light-purple); /* Matches your header purple */
+    border-bottom: 2px solid var(--header-light-purple);
     padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
+/* Individual Resource Items */
 .resource-item {
     margin-bottom: 20px;
     padding: 15px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;  /* Card style with white background */
+    color: var(--text-light);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.3s;
 }
 
+.resource-item:hover {
+    transform: translateY(-4px);
+    background-color: #f9f9f9;
+}
+
+/* Subheadings within Resource Items */
 .resource-item h3 {
     margin: 0;
     font-size: 1.2em;
-    color: #555555;
+    color: #5e3089; /* Consistent purple accent */
 }
 
+/* Titles within Resource Items */
 .resource-item h2 {
     margin: 5px 0;
     font-size: 1.5em;
-    color: #721c24;
+    color: var(--header-light-purple);
 }
 
+/* Resource Descriptions */
 .resource-item p {
     margin: 10px 0;
-    color: #555555;
     font-size: 1em;
+    color: var(--text-light);
+    line-height: 1.6;
 }
 
+/* Download Button Styling */
 .download-file {
     display: inline-block;
-    margin-top: 10px;
     padding: 10px 15px;
-    background-color: #721c24;
+    margin-top: 10px;
+    background-color: #5e3089; /* Matches your button style */
     color: #ffffff;
     text-decoration: none;
-    border-radius: 4px;
     font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 .download-file:hover {
-    background-color: #a12c34;
+    background-color: #4a256e;
 }
-
-  
