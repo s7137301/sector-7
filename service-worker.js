@@ -23,7 +23,19 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
+      (async () => {
+        try {
+          const preloadResp = await event.preloadResponse;
+          if (preloadResp) {
+            return preloadResp;
+          }
+
+          const networkResp = await fetch(event.request);
+          return networkResp;
+        } catch (error) {
+          return caches.match(OFFLINE_URL);
+        }
+      })()
     );
   } else {
     event.respondWith(
