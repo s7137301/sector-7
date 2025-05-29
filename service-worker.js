@@ -23,17 +23,12 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request, { redirect: 'follow' }).catch(() => {
-        return caches.match(OFFLINE_URL);
-      })
+      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
     );
   } else {
     event.respondWith(
       caches.match(event.request).then(response => {
-        return response || fetch(event.request).catch(() => {
-          // fallback empty response if offline and resource not cached
-          return new Response('', { status: 200 });
-        });
+        return response || fetch(event.request).catch(() => new Response('', { status: 200 }));
       })
     );
   }
