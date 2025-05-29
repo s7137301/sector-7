@@ -1,17 +1,17 @@
 const CACHE_NAME = 'sector-7-cache-v1';
 const OFFLINE_URL = '/offline.html';
 
+const FILES_TO_CACHE = [
+  '/',
+  '/index.html',
+  '/offline.html',
+  '/styles.css',
+  '/Sector-7.png',
+];
+
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/offline.html',
-        '/Sector-7.png',
-        '/styles.css'
-      ]);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
   );
   self.skipWaiting();
 });
@@ -21,17 +21,23 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Only handle navigation (HTML pages)
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request).catch(() => {
         return caches.match(OFFLINE_URL);
       })
     );
-  } else {
-    event.respondWith(
-      caches.match(event.request).then(response => {
-        return response || fetch(event.request);
-      })
-    );
+    return;
   }
+
+  // For other requests (like JS, CSS, images), try cache then network
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request).catch(() => {
+        // Avoid crashing on things like Cloudflare Insights failing
+        return new Response('', { status: 200 });
+      });
+    })
+  );
 });
