@@ -11,7 +11,10 @@ const FILES_TO_CACHE = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        return cache.addAll(FILES_TO_CACHE);
+      })
   );
   self.skipWaiting();
 });
@@ -21,18 +24,27 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Only handle navigation requests
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        return cachedResponse || fetch(event.request).catch(() => {
-          // If fetch fails for other requests, just fail quietly by returning nothing
-          return new Response('', { status: 408, statusText: 'Request Timeout' });
-        });
+      fetch(event.request).catch(error => {
+        console.log('Fetch failed; serving offline page instead.', error);
+        return caches.match(OFFLINE_URL);
       })
     );
+    return;
   }
+
+  // For other requests, try cache first then network
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request).catch(error => {
+        console.log('Fetch failed for non-navigation request.', error);
+        // Optional: return offline image or empty response here if needed
+      });
+    })
+  );
 });
