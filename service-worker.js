@@ -22,18 +22,9 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
+    // Directly fetch index.html to avoid redirect issues
     event.respondWith(
-      fetch(event.request).then(response => {
-        // If the response is a redirect, return a new response without the redirect flag
-        if (response.redirected) {
-          return new Response(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: response.headers
-          });
-        }
-        return response;
-      }).catch(() => caches.match(OFFLINE_URL))
+      fetch('/index.html').catch(() => caches.match(OFFLINE_URL))
     );
     return;
   }
