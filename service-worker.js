@@ -21,34 +21,18 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  const request = event.request;
-
-  // Handle navigation requests with offline fallback
-  if (request.mode === 'navigate') {
+  if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(request).catch(() => caches.match(OFFLINE_URL))
+      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
     );
-    return;
-  }
-
-  // For same-origin requests (your site's files)
-  if (request.url.startsWith(self.location.origin)) {
+  } else {
     event.respondWith(
-      caches.match(request).then(cachedResponse => {
-        return cachedResponse || fetch(request).catch(() => {
-          // You can optionally return something here if fetch fails for non-navigation requests
-          return cachedResponse; // fallback to cache if available
+      caches.match(event.request).then(cachedResponse => {
+        return cachedResponse || fetch(event.request).catch(() => {
+          // If fetch fails for other requests, just fail quietly by returning nothing
+          return new Response('', { status: 408, statusText: 'Request Timeout' });
         });
       })
     );
-    return;
   }
-
-  // For cross-origin requests, just try fetch, no caching, catch fetch errors silently
-  event.respondWith(
-    fetch(request).catch(() => {
-      // If fetch fails, just fail silently without throwing error in console
-      return new Response('', { status: 503, statusText: 'Service Unavailable' });
-    })
-  );
 });
