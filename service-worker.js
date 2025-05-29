@@ -27,25 +27,14 @@ self.addEventListener('fetch', event => {
         return caches.match(OFFLINE_URL);
       })
     );
-    return;
+  } else {
+    event.respondWith(
+      caches.match(event.request).then(response => {
+        return response || fetch(event.request).catch(() => {
+          // fallback empty response if offline and resource not cached
+          return new Response('', { status: 200 });
+        });
+      })
+    );
   }
-
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request).catch(() => {
-        return new Response('', { status: 200 });
-      });
-    })
-  );
-});
-
-  // For other requests (like JS, CSS, images), try cache then network
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request).catch(() => {
-        // Avoid crashing on things like Cloudflare Insights failing
-        return new Response('', { status: 200 });
-      });
-    })
-  );
 });
