@@ -4,12 +4,11 @@ const CACHE_NAME = "sector-7-cache-v4";
 const OFFLINE_URL = "/offline.html";
 
 const FILES_TO_CACHE = [
-  "/",
-  "/index.html",
-  OFFLINE_URL,
+  "/offline.html",
   "/styles.css",
-  "/Sector-7.png",
+  "/Sector-7.png"
 ];
+
 
 // Install: cache all needed files
 self.addEventListener("install", (event) => {
