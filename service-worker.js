@@ -21,16 +21,23 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request).catch(async () => {
-      // If it's a navigation request, show the offline page
-      if (event.request.mode === 'navigate') {
-        return caches.match(OFFLINE_URL);
-      }
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          return response;
+        })
+        .catch(async () => {
+          const cached = await caches.match(event.request);
+          return cached || caches.match(OFFLINE_URL);
+        })
+    );
+    return;
+  }
 
-      // Otherwise, try cache
-      const cachedResponse = await caches.match(event.request);
-      return cachedResponse;
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
     })
   );
 });
