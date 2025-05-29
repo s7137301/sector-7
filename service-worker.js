@@ -21,17 +21,16 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  if (event.request.mode === 'navigate') {
-    // Directly fetch index.html to avoid redirect issues
-    event.respondWith(
-      fetch('/index.html').catch(() => caches.match(OFFLINE_URL))
-    );
-    return;
-  }
-
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
+    fetch(event.request).catch(async () => {
+      // If it's a navigation request, show the offline page
+      if (event.request.mode === 'navigate') {
+        return caches.match(OFFLINE_URL);
+      }
+
+      // Otherwise, try cache
+      const cachedResponse = await caches.match(event.request);
+      return cachedResponse;
     })
   );
 });
