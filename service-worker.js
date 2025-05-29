@@ -21,15 +21,23 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Only handle navigation (HTML pages)
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => {
+      fetch(event.request, { redirect: 'follow' }).catch(() => {
         return caches.match(OFFLINE_URL);
       })
     );
     return;
   }
+
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request).catch(() => {
+        return new Response('', { status: 200 });
+      });
+    })
+  );
+});
 
   // For other requests (like JS, CSS, images), try cache then network
   event.respondWith(
