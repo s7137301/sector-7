@@ -23,24 +23,16 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      (async () => {
-        try {
-          const preloadResp = await event.preloadResponse;
-          if (preloadResp) {
-            return preloadResp;
-          }
-
-          const networkResp = await fetch(event.request);
-          return networkResp;
-        } catch (error) {
-          return caches.match(OFFLINE_URL);
-        }
-      })()
+      fetch(event.request).catch(() => {
+        return caches.match(OFFLINE_URL);
+      })
     );
   } else {
     event.respondWith(
       caches.match(event.request).then(response => {
-        return response || fetch(event.request).catch(() => new Response('', { status: 200 }));
+        return response || fetch(event.request).catch(() => {
+          return new Response('', { status: 200 });
+        });
       })
     );
   }
