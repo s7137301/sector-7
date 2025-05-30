@@ -4,31 +4,124 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <title>Sector-7|DDOS Protection</title>
+  <title>Sector-7 | DDOS Protection</title>
 </head>
-<body>
-  <h1>Sector-7|DDOS Protection</h1>
-  <form id="turnstile-form">
-    <p>Complete the CAPTCHA to proceed:</p>
-    <!-- Example for Cloudflare Turnstile -->
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAABBp8DDATkRt9PbP"></div>
-    <button type="button" onclick="handleRedirect()">Submit</button>
+<body id="turnstile-page">
+  <h1>Sector-7 | DDOS Protection</h1>
+  <form id="turnstile-form" onsubmit="return false;"> <!-- Prevent default form submission -->
+    <p>Complete the CAPTCHA to proceed to Sector-7:</p>
+    <div id="turnstile-widget-container" class="cf-turnstile" 
+         data-sitekey="0x4AAAAAABBp8DDATkRt9PbP" 
+         data-callback="onTurnstileSuccess"
+         data-error-callback="onTurnstileError"
+         data-expired-callback="onTurnstileExpired">
+    </div>
+    <button type="button" id="captcha-submit-button" disabled>Verifying...</button>
+    <p id="turnstile-message" style="margin-top: 10px; min-height: 1.2em;"></p>
   </form>
-   <div class="status-link">
-    <p><strong>📢 Need to check Sector-7 service availability?</strong></p>
-    <p>
-      Visit our <a href="https://sector-7status.pages.dev/" target="_blank">Status Page</a> and save it as a bookmark to monitor real-time service health.
-    </p>
-  </div>
-   <script src="turnstile.js"></script>
+  
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script>
-    function handleRedirect() {
-      // Simulate successful Turnstile completion
-      window.location.href = "home.html"; // Redirects to home.html
+    let currentTurnstileToken = null;
+    const submitButton = document.getElementById('captcha-submit-button');
+    const turnstileMessage = document.getElementById('turnstile-message');
+
+    function enableSubmitButton(enable = true, message = "Proceed to Site") {
+        if (submitButton) {
+            submitButton.disabled = !enable;
+            submitButton.textContent = message;
+        }
     }
-  </script>
-  <script>
+
+    function setTurnstileMessage(message, isError = false) {
+        if (turnstileMessage) {
+            turnstileMessage.textContent = message;
+            turnstileMessage.style.color = isError ? 'var(--danger-red)' : 'var(--highlight-green)';
+        }
+    }
+
+    // Called by Turnstile on success
+    async function onTurnstileSuccess(token) {
+      currentTurnstileToken = token;
+      enableSubmitButton(true, "Verifying..."); // Enable button, show verifying
+      setTurnstileMessage("CAPTCHA passed. Verifying...", false);
+
+      try {
+        // **REPLACE WITH YOUR ACTUAL WORKER URL**
+        const workerUrl = 'https://your-worker-subdomain.your-account.workers.dev/verify-turnstile'; 
+        
+        const response = await fetch(workerUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: currentTurnstileToken }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          setTurnstileMessage("Verification successful! Redirecting...", false);
+          enableSubmitButton(false, "Redirecting..."); // Keep disabled during redirect
+          window.location.href = "home.html";
+        } else {
+          setTurnstileMessage("CAPTCHA verification failed. Please try again.", true);
+          console.error('Turnstile verification failed:', result.errors || 'Unknown error');
+          enableSubmitButton(true, "Retry"); // Allow retry
+          resetTurnstileWidget();
+        }
+      } catch (error) {
+        setTurnstileMessage("Error verifying CAPTCHA. Check console.", true);
+        console.error('Error calling verification worker:', error);
+        enableSubmitButton(true, "Retry");
+        resetTurnstileWidget();
+      }
+    }
+
+    function onTurnstileError(errorCode) {
+      currentTurnstileToken = null;
+      setTurnstileMessage(`CAPTCHA error (${errorCode}). Please refresh or try again.`, true);
+      console.error('Turnstile challenge failed with error code:', errorCode);
+      enableSubmitButton(false, "Error"); // Keep disabled or indicate error
+    }
+
+    function onTurnstileExpired() {
+      currentTurnstileToken = null;
+      setTurnstileMessage("CAPTCHA expired. Please complete it again.", true);
+      // console.warn('Turnstile token expired.');
+      enableSubmitButton(false, "Expired"); // Keep disabled
+      resetTurnstileWidget();
+    }
+    
+    function resetTurnstileWidget() {
+        const widgetContainer = document.getElementById('turnstile-widget-container');
+        if (widgetContainer && typeof turnstile !== 'undefined' && turnstile.reset) {
+            turnstile.reset(widgetContainer);
+            enableSubmitButton(false, "Verifying..."); // Disable button until new success
+        }
+    }
+
+    // Add click listener to the button
+    // This button click is now primarily for retrying IF the automated verification after success fails.
+    // The main flow is: Turnstile success -> onTurnstileSuccess -> fetch to worker -> redirect.
+    if (submitButton) {
+      submitButton.addEventListener('click', function() {
+        if (!this.disabled && currentTurnstileToken) {
+            // This click would mean a retry attempt after a previous failure,
+            // or if the flow was changed to not auto-verify.
+            // For now, onTurnstileSuccess handles the verification automatically.
+            // If you want the button to explicitly trigger verification:
+            // onTurnstileSuccess(currentTurnstileToken); // Re-trigger verification with existing token if still valid
+            // Or, more robustly, reset and let user solve again if previous verify failed:
+            setTurnstileMessage("Please complete the CAPTCHA.", false);
+            resetTurnstileWidget();
+        } else if (!this.disabled && !currentTurnstileToken) {
+            setTurnstileMessage("Please complete the CAPTCHA first.", true);
+        }
+      });
+    }
+
+    // Service worker registration (if needed)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js')
         .then(() => console.log('Service Worker registered'))

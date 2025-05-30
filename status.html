@@ -5,101 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site Status - Sector-7</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Notice Banner -->
     <div id="notice-banner" class="banner">
         <p>For enhanced security and anonymity, we recommend accessing this site via the Tor Browser. 
             <a href="https://www.torproject.org/download/" target="_blank">Download Tor Browser</a>.
         </p>
-        <button class="close-banner" onclick="closeBanner()">&#10005;</button>
+        
     </div>
 
-    <!-- Logo Container -->
-    <div class="logo-container">
+    <header class="page-main-header">
         <img src="Sector-7.png" alt="Sector-7 Logo" class="logo">
-    </div>
-
-    <!-- Header -->
-    <header>
-        <h1>Sector-7 Status Page</h1>
-        <p>Check the current status of our Main Onion, Backup Onion, and Clearnet sites.</p>
+        <h1 class="page-title">Website Status</h1>
+        <div class="header-actions">
+            <button onclick="toggleTheme()" title="Toggle Light/Dark Mode">Theme</button>
+        </div>
     </header>
 
-    <!-- Navigation -->
-    <nav>
+    <nav class="navbar">
         <a href="home.html">Home</a>
         <a href="reports.html">Reports</a>
+        <a href="announcements.html">Announcements</a>
         <a href="about.html">About</a>
         <a href="support.html">Support</a>
-        <a href="status.html">Website Status</a>
+        <a href="status.html" class="active">Website Status</a>
     </nav>
 
-    <!-- DDoS Announcement Section -->
-    <section id="ddos-announcement" style="background-color: #f8d7da; color: #721c24; padding: 20px; border: 1px solid #f5c6cb; margin: 20px 0;">
-    <h2>Important Notice</h2>
-    <h2>Clearnet Status</h2>
-    <p>Sector-7 is currently experiencing an ongoing Distributed Denial of Service (DDoS) attack, which has peaked at a massive 756 Tbps (terabits per second) and 789 million RPS (requests per second). This has caused significant disruption to our website's accessibility.</p>
-    <p>We are actively mitigating this attack using advanced measures in partnership with Cloudflare, a global leader in internet security. Their high-capacity DDoS protection systems are helping us absorb and filter the malicious traffic while maintaining the integrity of legitimate user connections as much as possible.</p>
-    <p>Our cybersecurity experts are monitoring the attack closely to adapt to its evolving nature and ensure the fastest possible recovery. Rest assured, your data remains safe and uncompromised, as this attack solely targets our server availability.</p>
-    <p>The clearnet sites remain up but are still experiencing high-level DDoS attacks. Users/clients may experience slower load times or reduced speeds and overall experience. We appreciate your patience and understanding during this time.</p>
-    <h2>Onion Site Status</h2>
-    <p>The Onion sites are currently down due to physical damage to our network infrastructure. However, all information remains intact and secure. The Onion sites will remain down for some time as we work on repairing the damages and restoring the services.</p>
-    <p>Thank you for your continued trust and patience.</p>
-    <p><strong>- The Sector-7 Team</strong></p>
-</section>
+    <main class="main-page-content">
+         <div class="page-title-container">
+             <h1 class="page-title-main">Current Service Status</h1>
+        </div>
+        <p style="text-align: center; margin-bottom: 2rem;">Check the current operational status of our sites. For detailed incident reports or maintenance news, please visit our <a href="announcements.html">Announcements page</a>.</p>
 
+        <section class="content-section"> <!-- Was status-container -->
+            <h2 class="content-section-title">Site Availability</h2>
+            
+            <div class="list-entry"> <!-- Was status-item -->
+                <h3 class="entry-title">Main Onion Site</h3>
+                <p class="entry-text status-label">Status: <span id="main-onion-status" style="color: var(--highlight-green);">Online</span></p>
+                <div class="entry-actions">
+                    <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank" class="button-link">
+                        Access Main Onion
+                    </a>
+                </div>
+            </div>
+            
+            <div class="list-entry">
+                <h3 class="entry-title">Backup Onion Site</h3>
+                <p class="entry-text status-label">Status: <span id="backup-onion-status" style="color: var(--highlight-green);">Online</span></p>
+                 <div class="entry-actions">
+                    <a href="http://xhr6hchckoszmswtvwy3hjpnysmwl7tuwz7hp5c5fdndfvt42xvt67yd.onion" target="_blank" class="button-link">
+                        Access Backup Onion
+                    </a>
+                </div>
+            </div>
+            
+            <div class="list-entry">
+                <h3 class="entry-title">Main Clearnet Site</h3>
+                <p class="entry-text status-label">Status: <span id="clearnet-status" style="color: var(--yellow-highlight);">Outdated</span></p>
+                <div class="entry-actions">
+                    <a href="https://sector-7.ct.ws" target="_blank" class="button-link secondary">
+                        Access Clearnet (Outdated)
+                    </a>
+                </div>
+            </div>
+            
+            <div class="list-entry">
+                <h3 class="entry-title">Backup Clearnet Site</h3>
+                <p class="entry-text status-label">Status: <span id="backup-clearnet-status" style="color: var(--highlight-green);">Online</span></p>
+                <div class="entry-actions">
+                    <a href="https://sector-7.pages.dev" target="_blank" class="button-link">
+                        Access Backup Clearnet
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <!-- Status Section -->
-    <section class="status-container">
-        <h2>Site Status</h2>
-        
-        <!-- Main Onion Site Status -->
-        <div class="status-item">
-            <h3>Main Onion Site</h3>
-            <p class="status-label">Status: <span id="main-onion-status" style="color: red;">OFFLINE</span></p>
-            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank" class="status-link">
-                Access Main Onion Site
-            </a>
-        </div>
-        
-        <!-- Backup Onion Site Status -->
-        <div class="status-item">
-            <h3>Backup Onion Site</h3>
-            <p class="status-label">Status: <span id="backup-onion-status" style="color: red;">OFFLINE</span></p>
-            <a href="http://xhr6hchckoszmswtvwy3hjpnysmwl7tuwz7hp5c5fdndfvt42xvt67yd.onion" target="_blank" class="status-link">
-                Access Backup Onion Site
-            </a>
-        </div>
-        
-        <!-- Main Clearnet Site Status -->
-        <div class="status-item">
-            <h3>Main Clearnet Site</h3>
-            <p class="status-label">Status: <span id="main-clearnet-status" style="color: green;">ONLINE</span></p>
-            <a href="https://sector-7.pages.dev" target="_blank" class="status-link">
-                Access Clearnet Site
-            </a>
-        </div>
-        
-        <!-- Backup Clearnet Site Status -->
-        <div class="status-item">
-            <h3>Backup Clearnet Site</h3>
-            <p class="status-label">Status: <span id="backup-clearnet-status" style="color: yellow;">OUTADED</span></p>
-            <a href="https://sector-7.ct.ws" target="_blank" class="status-link">
-                Access Backup Clearnet Site
-            </a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Sector-7. All rights reserved.</p>
+    <footer class="site-footer">
+        <p>© 2025 Sector-7. All rights reserved.</p>
         <nav>
             <a href="home.html">Home</a> | 
+            <a href="reports.html">Reports</a> |
+            <a href="announcements.html">Announcements</a> |
             <a href="about.html">About</a> | 
             <a href="support.html">Support</a> | 
-            <a href="reports.html">Published Reports</a> | 
             <a href="status.html">Website Status</a>
         </nav>
         <p>Our Official Onion Address: 
@@ -108,6 +98,6 @@
             </a>
         </p>
     </footer>
+    <script src="script.js" defer></script>
 </body>
 </html>
-

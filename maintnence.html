@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Maintenance</title>
+    <title>Under Maintenance - Sector-7</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="maintenance-container">
+    <div class="utility-page-container maintenance-container">
+        <img src="Sector-7.png" alt="Sector-7 Logo" class="logo">
         <h1>🚧 Under Maintenance 🚧</h1>
-        <p>We're currently performing some updates on this page. Please check back later.</p>
+        <p>We're currently performing some updates on this page or the entire site. Please check back later.</p>
+        <p>For updates, please see our <a href="announcements.html">Announcements Page</a> or <a href="status.html">Status Page</a>.</p>
         <p>Error Code: <strong>503</strong> - Service Unavailable</p>
-        <button onclick="goHome()" class="home-button">Go Back to Home</button>
+        <button onclick="goHome()" class="button-link home-button">Go Back to Home</button>
     </div>
 
     <script>
-        // Function to redirect the user to the homepage
         function goHome() {
-            window.location.href = "home.html"; // Replace with your actual homepage URL
+            window.location.href = "home.html";
         }
     </script>
 </body>

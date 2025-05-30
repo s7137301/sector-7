@@ -3,69 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta name="description" content="Sector-7 is a secure platform for whistleblowers to publish reports anonymously.">
     <meta name="keywords" content="Sector-7, whistleblowers, reports, transparency, accountability">
     <title>About - Sector-7</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    
     <div id="notice-banner" class="banner">
         <p>For enhanced security and anonymity, we recommend accessing this site via the Tor Browser. 
             <a href="https://www.torproject.org/download/" target="_blank">Download Tor Browser</a>.
         </p>
-        <button class="close-banner" onclick="closeBanner()">&#10005;</button> <!-- "X" Button -->
+        
     </div>
     
-    <!-- Top Logo Section -->
-    <div class="logo-container">
+    <header class="page-main-header">
         <img src="Sector-7.png" alt="Sector-7 Logo" class="logo">
-    </div>
-    <header>
-        <h1>About Us</h1>
+        <h1 class="page-title">About Us</h1>
+         <div class="header-actions">
+            <button onclick="toggleTheme()" title="Toggle Light/Dark Mode">Theme</button>
+        </div>
     </header>
 
-    <nav>
+    <nav class="navbar">
         <a href="home.html">Home</a>
-        <a href="reports.html">Published Reports</a>
-        <a href="about.html">About</a>
+        <a href="reports.html">Reports</a>
+        <a href="announcements.html">Announcements</a>
+        <a href="about.html" class="active">About</a>
         <a href="support.html">Support</a>
         <a href="status.html">Website Status</a>
     </nav>
 
-    <section>
-        <h2>Our Mission</h2>
-        <p>We aim to provide a secure platform for whistleblowers while ensuring transparency and accountability.</p>
-    <h2>What We Do</h2>
-    <p>Sector-7 facilitates the secure collection and distribution of sensitive information. Through robust encryption, cutting-edge cybersecurity practices, and collaboration with trustworthy networks, we ensure the confidentiality of whistleblowers while disseminating vital information to the public.</p>
-    
-    <h2>Our Commitment to Security</h2>
-    <p>At Sector-7, the safety of whistleblowers and their data is paramount. We employ state-of-the-art security measures, including dedicated onion services and collaboration with leading cybersecurity organizations, to withstand threats and ensure anonymity. In case of disruptions, we work diligently to restore services while preserving the integrity of all data.</p>
-    
-   <h2>Why We Were Founded</h2>
-<p>Sector-7 was established to provide a secure and anonymous platform for individuals who possess information about unethical, illegal, or harmful activities. Our mission is to empower whistleblowers and truth-seekers with the ability to report and share critical evidence without fear of retribution or compromise.</p>
-<p>Recognizing the immense challenges faced by those who choose to expose wrongdoing, we strive to protect their anonymity and safeguard their information through advanced security measures. Sector-7 exists as a beacon for transparency and accountability, ensuring that voices demanding justice are heard and supported globally.</p>
+    <main class="main-page-content">
+        <section class="content-section">
+            <h2 class="content-section-title">Our Mission</h2>
+            <p>We aim to provide a secure platform for whistleblowers while ensuring transparency and accountability in all areas of public and private interest. Our commitment is to protect those who come forward with critical information and to make that information accessible for public scrutiny and action.</p>
+            <p>Sector-7 was founded on the principle that informed citizens are essential for a just society. We leverage cutting-edge security practices and advocate for the use of anonymity tools like Tor to safeguard our users.</p>
+        </section>
 
-    </section>
-    
+        <section class="content-section">
+            <h2 class="content-section-title">Our Values</h2>
+            <ul>
+                <li><strong>Integrity:</strong> Upholding the highest standards of honesty and ethical conduct.</li>
+                <li><strong>Security:</strong> Prioritizing the safety and anonymity of our whistleblowers.</li>
+                <li><strong>Transparency:</strong> Promoting openness and access to information.</li>
+                <li><strong>Accountability:</strong> Working to ensure that institutions and individuals are answerable for their actions.</li>
+                <li><strong>Courage:</strong> Supporting the bravery of those who speak out against wrongdoing.</li>
+            </ul>
+        </section>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 Sector-7. All rights reserved.</p>
+    <footer class="site-footer">
+        <p>© 2025 Sector-7. All rights reserved.</p>
         <nav>
             <a href="home.html">Home</a> | 
+            <a href="reports.html">Reports</a> |
+            <a href="announcements.html">Announcements</a> |
             <a href="about.html">About</a> | 
             <a href="support.html">Support</a> | 
-            <a href="reports.html">Published Reports</a>
             <a href="status.html">Website Status</a>
         </nav>
         <p>Our Official Onion Address Is Located At: 
-            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion</a>
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion</a>
         </p>
     </footer>
     <script src="script.js" defer></script>
 </body>
-
-
 </html>

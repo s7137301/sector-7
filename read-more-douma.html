@@ -3,63 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Douma Chemical Incident Report</title>
+    <title>Engineering Assessment: Douma Cylinders - Sector-7</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <h1>Douma Chemical Incident</h1>
-        <p>An in-depth investigation based on whistleblower evidence.</p>
+    <div id="notice-banner" class="banner">
+        <p>For enhanced security and anonymity, we recommend accessing this site via the Tor Browser. 
+            <a href="https://www.torproject.org/download/" target="_blank">Download Tor Browser</a>.
+        </p>
+        
+    </div>
+
+    <header class="page-main-header">
+        <img src="Sector-7.png" alt="Sector-7 Logo" class="logo">
+        <h1 class="page-title">Report Details</h1> <!-- Generic title for report pages -->
+        <div class="header-actions">
+            <button onclick="toggleTheme()" title="Toggle Light/Dark Mode">Theme</button>
+        </div>
     </header>
+
     <nav class="navbar">
         <a href="home.html">Home</a>
-        <a href="reports.html">Reports</a>
+        <a href="reports.html" class="active">Reports</a> <!-- Mark Reports as active -->
+        <a href="announcements.html">Announcements</a>
         <a href="about.html">About</a>
         <a href="support.html">Support</a>
         <a href="status.html">Website Status</a>
     </nav>
 
-    <!-- Article Content -->
-    <section class="article-container">
-        <h2>Engineering Assessment of the Two Cylinders Observed in Douma</h2>
+    <main class="main-page-content">
+        <article class="content-section article-container"> <!-- Use content-section for styling -->
+            <h2 class="content-section-title">Engineering Assessment of the Two Cylinders Observed in Douma</h2>
+            <p class="entry-date" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; background: none; padding-left: 0;">Published: May 30, 2025 (Example Date)</p>
 
-        <p>This report relates to the alleged use of toxic chemicals as a weapon in Douma, Syria, on April 7, 2018. The Fact-Finding Mission (FFM) gathered and assessed data on two chlorine cylinders observed at separate locations: Location 2 and Location 4. The engineering sub-team conducted a detailed assessment to evaluate how the cylinders may have arrived at their respective locations.</p>
+            <p>This report relates to the alleged use of toxic chemicals as a weapon in Douma, Syria, on April 7, 2018. The Fact-Finding Mission (FFM) gathered and assessed data on two chlorine cylinders observed at separate locations: Location 2 and Location 4. The engineering sub-team conducted a detailed assessment to evaluate how the cylinders may have arrived at their respective locations.</p>
 
-        <h3>Location 2</h3>
-        <p>At Location 2, a gas cylinder was found on a terrace next to a crater in the concrete roof. The analysis explored two main hypotheses:</p>
-        <ul>
-            <li><strong>Hypothesis L2-1:</strong> The cylinder was dropped from an aircraft and caused the observed crater.</li>
-            <li><strong>Hypothesis L2-2:</strong> The cylinder was manually placed on the terrace next to a pre-existing crater.</li>
-        </ul>
-        <p>Simulations showed that the observed damage was inconsistent with a cylinder dropped from an aircraft. The deformation patterns of the cylinder and the crater were not aligned with expectations of an aerial drop.</p>
+            <h3>Location 2</h3>
+            <p>At Location 2, a gas cylinder was found on a terrace next to a crater in the concrete roof. The analysis explored two main hypotheses:</p>
+            <ul>
+                <li><strong>Hypothesis L2-1:</strong> The cylinder was dropped from an aircraft and caused the observed crater.</li>
+                <li><strong>Hypothesis L2-2:</strong> The cylinder was manually placed on the terrace next to a pre-existing crater.</li>
+            </ul>
+            <p>Simulations showed that the observed damage was inconsistent with a cylinder dropped from an aircraft. The deformation patterns of the cylinder and the crater were not aligned with expectations of an aerial drop.</p>
 
-        <h3>Location 4</h3>
-        <p>At Location 4, a similar cylinder was found on a bed beneath a hole in the roof. The analysis proposed the following hypotheses:</p>
-        <ul>
-            <li><strong>Hypothesis L4-1:</strong> The cylinder fell through the roof and landed on the bed.</li>
-            <li><strong>Hypothesis L4-2:</strong> The cylinder was dropped but later moved onto the bed by individuals.</li>
-            <li><strong>Hypothesis L4-3:</strong> The cylinder was manually placed on the bed, and the roof damage was staged.</li>
-        </ul>
-        <p>Findings revealed that the damage to the cylinder and the room were inconsistent with an aerial drop scenario. Additionally, the presence of rust and signs of prolonged exposure indicated the cylinder was placed deliberately rather than freshly delivered.</p>
+            <h3>Location 4</h3>
+            <p>At Location 4, a similar cylinder was found on a bed beneath a hole in the roof. The analysis proposed the following hypotheses:</p>
+            <ul>
+                <li><strong>Hypothesis L4-1:</strong> The cylinder fell through the roof and landed on the bed.</li>
+                <li><strong>Hypothesis L4-2:</strong> The cylinder was dropped but later moved onto the bed by individuals.</li>
+                <li><strong>Hypothesis L4-3:</strong> The cylinder was manually placed on the bed, and the roof damage was staged.</li>
+            </ul>
+            <p>Findings revealed that the damage to the cylinder and the room were inconsistent with an aerial drop scenario. Additionally, the presence of rust and signs of prolonged exposure indicated the cylinder was placed deliberately rather than freshly delivered.</p>
 
-        <h3>Conclusion</h3>
-        <p>The engineering sub-team concluded that the cylinders were more likely manually placed at both locations rather than delivered from aircraft. These findings challenge the official narrative and raise questions about the integrity of the evidence presented at the time.</p>
+            <h3>Conclusion</h3>
+            <p>The engineering sub-team concluded that the cylinders were more likely manually placed at both locations rather than delivered from aircraft. These findings challenge the official narrative and raise questions about the integrity of the evidence presented at the time.</p>
 
-        <p>For more details and supporting evidence, refer to the <a href="reports.html">Published Reports Page</a>.</p>
+            <p>For more details and supporting evidence, refer to the original document: <a href="OPCW-CLASSIFIED REPORT.pdf" download class="button-link">Download Full Report (PDF)</a> or go back to the <a href="reports.html">Published Reports Page</a>.</p>
 
-        <button onclick="window.history.back()" class="back-button">Back to Reports</button>
-    </section>
+            <button onclick="window.history.back()" class="button-link back-button">Back to Previous Page</button>
+        </article>
+    </main>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Sector-7. All rights reserved.</p>
+    <footer class="site-footer">
+        <p>© 2025 Sector-7. All rights reserved.</p>
         <nav>
             <a href="home.html">Home</a> | 
+            <a href="reports.html">Reports</a> |
+            <a href="announcements.html">Announcements</a> |
             <a href="about.html">About</a> | 
             <a href="support.html">Support</a> | 
             <a href="status.html">Website Status</a>
         </nav>
+         <p>Our Official Onion Address Is Located At: 
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion</a>
+        </p>
     </footer>
+    <script src="script.js" defer></script>
 </body>
 </html>

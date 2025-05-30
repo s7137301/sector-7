@@ -3,159 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta name="description" content="Sector-7 is a secure platform for whistleblowers to publish reports anonymously.">
     <meta name="keywords" content="Sector-7, whistleblowers, reports, transparency, accountability">
     <title>Home - Sector-7</title>
     <link rel="stylesheet" href="styles.css">
-  </head>
-  
-    
-  
-    
-  
-  
-
-
+</head>
 <body>
-     
-    
-    
-    
-    
     <div id="notice-banner" class="banner">
         <p>For enhanced security and anonymity, we recommend accessing this site via the Tor Browser. 
             <a href="https://www.torproject.org/download/" target="_blank">Download Tor Browser</a>.
         </p>
-        <button class="close-banner" onclick="closeBanner()">&#10005;</button> <!-- "X" Button -->
+        
     </div>
-    <main id="main-content" class="hidden">
-    <!-- Top Logo Section -->
-    <div class="logo-container">
+
+    <header class="page-main-header">
         <img src="Sector-7.png" alt="Sector-7 Logo" class="logo">
-    </div>
-    <header>
-        <h1>Sector-7</h1>
-        <button onclick="toggleTheme()" style="margin-top: 10px; padding: 5px 10px; border: none; background-color: #5e3089; color: white; cursor: pointer;">Toggle Light/Dark Mode</button>
+        <h1 class="site-title">Sector-7</h1>
+        <div class="header-actions">
+            <button onclick="toggleTheme()" title="Toggle Light/Dark Mode">Theme</button>
+        </div>
     </header>
 
-    <nav>
-        <a href="home.html">Home</a>
-        <a href="reports.html">Published Reports</a>
+    <nav class="navbar">
+        <a href="home.html" class="active">Home</a>
+        <a href="reports.html">Reports</a>
+        <a href="announcements.html">Announcements</a>
         <a href="about.html">About</a>
         <a href="support.html">Support</a>
         <a href="status.html">Website Status</a>
-        
     </nav>
 
-    <section>
-        <h2>Welcome to  Sector-7 </h2>
-        <p>At our core, we are dedicated to empowering whistleblowers and ensuring transparency and accountability in all areas of public and private interest. This platform is built to provide a secure environment for individuals to report critical information confidentially.</p>
-    </section>
-    <!-- <section id="maintenance-timer-section">
-        <h2>Scheduled Maintenance</h2>
-        <p>The site is currently undergoing maintenance. Service will resume soon:</p>
-        <p id="maintenance-timer">Calculating time remaining...</p>
-    </section> -->
-        <section id="ddos-announcement" style="background-color: #f8d7da; color: #721c24; padding: 20px; border: 1px solid #f5c6cb; margin: 20px 0;">
-  <h2>Important Notice</h2>
-<p>Sector-7 is currently the target of a malicious attack by a state-sponsored group/actor. We are actively collaborating with international law enforcement and intelligence agencies to address this situation. At this time, we have been advised not to disclose the agencies we are working with or details about the attackers. If possible, we will provide this information in the future. Please rest assured that all information remains fully secure, and no confidential data has been accessed.</p>
-<p>The Sector-7 Onion sites are currently down due to physical damage to our network infrastructure. At this time, all information remains intact and secure, and restoration efforts are underway.</p>
-<p>We are also experiencing a Distributed Denial of Service (DDoS) attack on the Sector-7 website, which has resulted in temporary disruptions to our services. Rest assured that we are actively working to mitigate the issue and restore full functionality as quickly as possible. Your data and confidentiality remain secure, as this attack solely aims to overload our servers with malicious traffic. We are collaborating with our technical team and cybersecurity experts to address the situation effectively.</p>
-<p>We deeply regret any inconvenience caused and appreciate your patience and understanding during this time. Updates on the progress of our resolution efforts will be posted on <a href="https://sector-7.pages.dev/status" target="_blank" style="color: #721c24; text-decoration: underline;">The Website Status Page</a> as they become available.</p>
-<p>Thank you for your continued trust and support.</p>
-<p><strong>- The Sector-7 Team</strong></p>
-
-</section>
-
-    <section id="announcements">
-        <h2>Latest Announcements</h2>
-       <p><strong>[28/03/2025]</strong> - We've launched a new security guide <a href="support.html">Learn More</a>.</p>
-        <p><strong>[28/03/2025]</strong> - At this time, Sector-7 cannot accept new reports unless they are from known whistleblowers who already have secure channels to contact us. In the future, we plan to introduce support for submitting low-risk reports through our clearnet site. We appreciate your understanding and patience as we work towards implementing this feature.</p>
-        <p><strong>[24/03/2025]</strong> - Sector-7 is currently the target of a malicious attack by a state-sponsored group / actor. We are actively collaborating with international law enforcement and intelligence agencies to address this situation. At this time, we have been advised not to disclose the agencies we are working with or details about the attackers. If possible, we will provide this information in the future. Please rest assured that all information remains fully secure, and no confidential data has been accessed.</p>
-         <p><strong>[24/03/2025]</strong> - The Sector-7 Onion sites are currently down due to physical damage to our network infrastructure, at this time all information remains intact and secure, restoration efforts are underway. </p>
-         <p><strong>[22/03/2025]</strong> - The Sector-7 Clearnet sites are currently experiencing a DDoS attack, and we are actively working to restore services—thank you for your understanding. Expect slower site operations </p>
-        <p><strong>[18/03/2025]</strong> - Scheduled maintenance will occur from [18/03/2025] to [20/03/2025]. Expect brief downtime.</p>
-    </section>
-
-    <section>
-        <h2>Why Use Our Platform?</h2>
-        <ul>
-            <li><strong>Anonymity:</strong> Your identity remains secure and private, thanks to our integration with the Tor network.</li>
-            <li><strong>Accessibility:</strong> Reports are published for public awareness, fostering accountability and change.</li>
-            <li><strong>Simplicity:</strong> Designed with ease of use in mind, our platform is straightforward and user-friendly.</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>How Does It Work?</h2>
-        <ol>
-            <li>To Submit the report you are REQUIRED to have the TOR Browser Installed. This is for the saftey and protection of the Whistleblower. If you want help Visit the Supports page</li>
-            <li>Submit reports securely through our <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">onion site</a>.</li>
-            <li>Our team reviews and verifies the information for accuracy and relevance.</li>
-            
-            <li>Published reports are made available on the <a href="reports.html">Published Reports</a> page for public access.</li>
-        </ol>
-    </section>
-    
-    <section id="faq">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-item">
-            <button class="faq-question">
-                What is Sector-7?
-                <span class="arrow">&#9662;</span> <!-- Down arrow -->
-            </button>
-            <div class="faq-answer">
-                <p>Sector-7 is a whistleblowing platform designed to ensure transparency and accountability by providing a secure and anonymous submission system.</p>
-            </div>
+    <main class="main-page-content">
+        <div class="page-title-container">
+             <h1 class="page-title-main">Empowering Transparency</h1>
         </div>
-        <div class="faq-item">
-            <button class="faq-question">
-                How can I submit a report?
-                <span class="arrow">&#9662;</span> <!-- Down arrow -->
-            </button>
-            <div class="faq-answer">
-                <p>You can submit a report securely through our onion site. Visit the <a href="support.html">Support page</a> for instructions on using the Tor Browser.</p>
-            </div>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question">
-                Is my identity protected?
-                <span class="arrow">&#9662;</span> <!-- Down arrow -->
-            </button>
-            <div class="faq-answer">
-                <p>Yes, our platform is designed to maintain your anonymity by leveraging the Tor network for secure submissions.</p>
-            </div>
-        </div>
-    </section>
-    
-    
-    
 
-    <section>
-        <h2>Quick Links</h2>
-        <ul>
-            <li><a href="reports.html">View Published Reports</a> - Explore whistleblowing reports that have been reviewed and made public.</li>
-            <li><a href="about.html">Learn About Us</a> - Understand our mission and values.</li>
-            <li><a href="support.html">Get Support</a> - Learn how to install and use Tor for secure submissions.</li>
-        </ul>
-    </section>
+        <section class="content-section">
+            <h2 class="content-section-title">Welcome to Sector-7</h2>
+            <p>At our core, we are dedicated to empowering whistleblowers and ensuring transparency and accountability in all areas of public and private interest. This platform is built to provide a secure environment for individuals to report critical information confidentially.</p>
+        </section>
 
-    <footer>
-        <p>&copy; 2025 Sector-7. All rights reserved.</p>
+        <section id="maintenance-timer-section" class="content-section">
+            <h2 class="content-section-title" style="color: var(--danger-red);">Scheduled Maintenance</h2>
+            <p>The site is currently undergoing maintenance. Service will resume soon:</p>
+            <p id="maintenance-timer">Calculating time remaining...</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Latest Announcements</h2>
+            <div class="list-entry">
+                <span class="entry-date">[18/03/2025]</span>
+                <div class="entry-text">
+                    <h3 class="entry-title">Scheduled Maintenance Notice</h3>
+                    <p>Scheduled maintenance will occur from [18/03/2025] to [20/03/2025]. Expect brief downtime.</p>
+                    <div class="entry-actions">
+                        <a href="announcements.html" class="button-link secondary">More info...</a>
+                    </div>
+                </div>
+            </div>
+             <!-- Add more announcements here if needed, or link to full announcements page -->
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Why Use Our Platform?</h2>
+            <ul>
+                <li><strong>Anonymity:</strong> Your identity remains secure and private, thanks to our integration with the Tor network.</li>
+                <li><strong>Accessibility:</strong> Reports are published for public awareness, fostering accountability and change.</li>
+                <li><strong>Simplicity:</strong> Designed with ease of use in mind, our platform is straightforward and user-friendly.</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">How Does It Work?</h2>
+            <ol>
+                <li>To submit a report, you are REQUIRED to have the TOR Browser Installed. This is for the safety and protection of the Whistleblower. If you need help, visit the <a href="support.html">Support page</a>.</li>
+                <li>Submit reports securely through our <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">onion site</a>.</li>
+                <li>Our team reviews and verifies the information for accuracy and relevance.</li>
+                <li>Published reports are made available on the <a href="reports.html">Published Reports</a> page for public access.</li>
+            </ol>
+        </section>
+    
+        <section class="content-section" id="faq-section">
+            <h2 class="content-section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <button class="faq-question">
+                    What is Sector-7?
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sector-7 is a whistleblowing platform designed to ensure transparency and accountability by providing a secure and anonymous submission system.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    How can I submit a report?
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <p>You can submit a report securely through our onion site. Visit the <a href="support.html">Support page</a> for instructions on using the Tor Browser.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is my identity protected?
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, our platform is designed to maintain your anonymity by leveraging the Tor network for secure submissions.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2 class="content-section-title">Quick Links</h2>
+            <ul>
+                <li><a href="reports.html">View Published Reports</a> - Explore whistleblowing reports that have been reviewed and made public.</li>
+                <li><a href="announcements.html">Latest Announcements</a> - Stay updated with our latest news and platform changes.</li>
+                <li><a href="about.html">Learn About Us</a> - Understand our mission and values.</li>
+                <li><a href="support.html">Get Support</a> - Learn how to install and use Tor for secure submissions.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 Sector-7. All rights reserved.</p>
         <nav>
             <a href="home.html">Home</a> | 
+            <a href="reports.html">Reports</a> |
+            <a href="announcements.html">Announcements</a> |
             <a href="about.html">About</a> | 
             <a href="support.html">Support</a> | 
-            <a href="reports.html">Published Reports</a>
             <a href="status.html">Website Status</a>
         </nav>
         <p>Our Official Onion Address Is Located At: 
-            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion</a>
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion</a>
         </p>
     </footer>
-</main>
-    <script src="script.js" defer></script>
+    <script src="script.js" defer></script> <!-- Ensure script.js has toggleTheme and closeBanner -->
 </body>
-
 </html>
