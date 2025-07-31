@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sector-7 es una plataforma segura para que los denunciantes publiquen informes de forma anónima.">
+    <meta name="keywords" content="Sector-7, denunciantes, informes, transparencia, responsabilidad">
+    <title>Inicio - Sector-7</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/script.js" defer></script>
+</head>
+<body>
+    <div id="notice-banner" class="banner">
+        <p>Para mayor seguridad y anonimato, recomendamos acceder a este sitio a través del Navegador Tor.
+            <a href="https://www.torproject.org/download/" target="_blank">Descargar Navegador Tor</a>.
+        </p>
+    </div>
+
+    <header class="page-main-header">
+        <img src="Sector-7.png" alt="Logotipo de Sector-7" class="logo">
+        <h1 class="site-title">Sector-7</h1>
+        <div class="header-actions">
+            <button onclick="toggleTheme()" title="Cambiar entre modo claro/oscuro">Tema</button>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <a href="home.html" class="active">Inicio</a>
+        <a href="reports.html">Informes</a>
+        <a href="announcements.html">Anuncios</a>
+        <a href="about.html">Acerca de</a>
+        <a href="support.html">Soporte</a>
+        <a href="status.html">Estado del sitio</a>
+    </nav>
+
+    <main class="main-page-content">
+        <div class="page-title-container">
+             <h1 class="page-title-main">Fomentando la Transparencia</h1>
+        </div>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Bienvenido a Sector-7</h2>
+            <p>En nuestro núcleo, estamos dedicados a empoderar a los denunciantes y garantizar la transparencia y la responsabilidad en todas las áreas de interés público y privado. Esta plataforma está diseñada para brindar un entorno seguro donde las personas puedan reportar información crítica de forma confidencial.</p>
+        </section>
+
+        <section id="maintenance-timer-section" class="content-section">
+            <h2 class="content-section-title" style="color: var(--danger-red);">Mantenimiento Programado</h2>
+            <p>El sitio se encuentra actualmente en mantenimiento. El servicio se reanudará pronto:</p>
+            <p id="maintenance-timer">Calculando tiempo restante...</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Últimos Anuncios</h2>
+            <div class="list-entry">
+                <span class="entry-date">[18/03/2025]</span>
+                <div class="entry-text">
+                    <h3 class="entry-title">Aviso de Mantenimiento Programado</h3>
+                    <p>Se realizará un mantenimiento programado del [18/03/2025] al [20/03/2025]. Espere breves interrupciones.</p>
+                    <div class="entry-actions">
+                        <a href="announcements.html" class="button-link secondary">Más información...</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">¿Por Qué Usar Nuestra Plataforma?</h2>
+            <ul>
+                <li><strong>Anonimato:</strong> Tu identidad se mantiene segura y privada gracias a nuestra integración con la red Tor.</li>
+                <li><strong>Accesibilidad:</strong> Los informes se publican para crear conciencia pública, fomentar la responsabilidad y el cambio.</li>
+                <li><strong>Simplicidad:</strong> Diseñado pensando en la facilidad de uso, nuestra plataforma es clara y fácil de usar.</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">¿Cómo Funciona?</h2>
+            <ol>
+                <li>Para enviar un informe, SE REQUIERE tener instalado el Navegador TOR. Esto es para la seguridad y protección del denunciante. Si necesitas ayuda, visita la <a href="support.html">página de soporte</a>.</li>
+                <li>Envía informes de forma segura a través de nuestro <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">sitio .onion</a>.</li>
+                <li>Nuestro equipo revisa y verifica la información por su precisión y relevancia.</li>
+                <li>Los informes publicados están disponibles en la página de <a href="reports.html">Informes Publicados</a> para acceso público.</li>
+            </ol>
+        </section>
+
+        <section class="content-section" id="faq-section">
+            <h2 class="content-section-title">Preguntas Frecuentes</h2>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ¿Qué es Sector-7?
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sector-7 es una plataforma de denuncia creada para asegurar transparencia y responsabilidad mediante un sistema de envío seguro y anónimo.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ¿Cómo puedo enviar un informe?
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Puedes enviar un informe de forma segura a través de nuestro sitio onion. Visita la <a href="support.html">página de soporte</a> para obtener instrucciones sobre cómo usar el Navegador Tor.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ¿Mi identidad está protegida?
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sí, nuestra plataforma está diseñada para mantener tu anonimato usando la red Tor para envíos seguros.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Enlaces Rápidos</h2>
+            <ul>
+                <li><a href="reports.html">Ver Informes Publicados</a> - Explora los informes verificados que se han hecho públicos.</li>
+                <li><a href="announcements.html">Últimos Anuncios</a> - Mantente al día con nuestras noticias y cambios en la plataforma.</li>
+                <li><a href="about.html">Conoce Sobre Nosotros</a> - Entiende nuestra misión y valores.</li>
+                <li><a href="support.html">Obtener Soporte</a> - Aprende a instalar y usar Tor para envíos seguros.</li>
+            </ul>
+        </section>
+        <div id="language-popup" class="popup hidden">
+            <div class="popup-content">
+              <strong id="popup-title"></strong>
+              <p id="popup-message"></p>
+              <div class="popup-buttons">
+                <a id="switch-btn" href="#" class="btn switch">Yes, switch</a>
+                <button class="btn stay" onclick="closePopup()">No, stay here</button>
+              </div>
+            </div>
+          </div>
+          
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 Sector-7. Todos los derechos reservados.</p>
+        <nav>
+            <a href="home.html">Inicio</a> | 
+            <a href="reports.html">Informes</a> |
+            <a href="announcements.html">Anuncios</a> |
+            <a href="about.html">Acerca de</a> | 
+            <a href="support.html">Soporte</a> | 
+            <a href="status.html">Estado del sitio</a>
+        </nav>
+        <p>Nuestra dirección oficial .onion es: 
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion</a>
+        </p>
+    </footer>
+   
+</body>
+</html>

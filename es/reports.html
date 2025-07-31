@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sector-7 es una plataforma segura para que los denunciantes publiquen informes de forma anónima.">
+    <meta name="keywords" content="Sector-7, denunciantes, informes, transparencia, responsabilidad">
+    <title>Informes Publicados - Sector-7</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/script.js" defer></script>
+
+</head>
+<body>
+    <div id="notice-banner" class="banner">
+        <p>Para mayor seguridad y anonimato, recomendamos acceder a este sitio a través del Navegador Tor.
+            <a href="https://www.torproject.org/download/" target="_blank">Descargar Navegador Tor</a>.
+        </p>
+    </div>
+
+    <header class="page-main-header">
+        <img src="Sector-7.png" alt="Logotipo de Sector-7" class="logo">
+        <h1 class="page-title">Informes Publicados</h1>
+        <div class="header-actions">
+            <button onclick="toggleTheme()" title="Cambiar entre modo claro/oscuro">Tema</button>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <a href="home.html">Inicio</a>
+        <a href="reports.html" class="active">Informes</a>
+        <a href="announcements.html">Anuncios</a>
+        <a href="about.html">Acerca de</a>
+        <a href="support.html">Soporte</a>
+        <a href="status.html">Estado del Sitio</a>
+    </nav>
+
+    <main class="main-page-content">
+        <section class="content-section">
+            <h2 class="content-section-title">Últimos Informes</h2>
+
+            <div class="list-entry">
+                <span class="entry-date">[2025-05-30]</span>
+                <div class="entry-text">
+                    <h3 class="entry-title">
+                        <a href="read-more-douma.html">Denunciante Revela Datos Controversiales sobre el Incidente Químico en Douma</a>
+                    </h3>
+                    <p class="entry-summary">Una evaluación técnica basada en pruebas de un denunciante cuestiona la versión oficial del presunto ataque químico en Douma, Siria, centrándose en la colocación de dos cilindros de cloro.</p>
+                    <div class="entry-actions">
+                        <a href="OPCW-CLASSIFIED REPORT.pdf" download class="button-link">Descargar PDF</a>
+                        <a href="read-more-douma.html" class="button-link secondary">Leer Más</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-entry">
+                <span class="entry-date">[2025-05-20]</span>
+                <div class="entry-text">
+                    <h3 class="entry-title">
+                        <a href="#">Informe de Ejemplo: Acusaciones de Mala Conducta Financiera</a>
+                    </h3>
+                    <p class="entry-summary">Emergen detalles sobre posibles irregularidades financieras en una gran corporación. Investigación en curso, el informe completo está pendiente de verificación.</p>
+                    <div class="entry-actions">
+                        <button disabled>Descargar (Pendiente)</button>
+                        <a href="#" class="button-link secondary disabled" aria-disabled="true">Leer Más (Próximamente)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Prueba de Descarga de Archivos</h2>
+            <p>Esta sección es para probar descargas. Al hacer clic en el botón, se intentará descargar un archivo de prueba varias veces.</p>
+            <button id="download-button" class="button-link">Descargar 100 Copias de Prueba</button>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 Sector-7. Todos los derechos reservados.</p>
+        <nav>
+            <a href="home.html">Inicio</a> |
+            <a href="reports.html">Informes</a> |
+            <a href="announcements.html">Anuncios</a> |
+            <a href="about.html">Acerca de</a> |
+            <a href="support.html">Soporte</a> |
+            <a href="status.html">Estado del Sitio</a>
+        </nav>
+        <p>Nuestra dirección oficial .onion es:
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">
+                3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion
+            </a>
+        </p>
+    </footer>
+
+    
+    <script>
+        const downloadBtn = document.getElementById("download-button");
+        if (downloadBtn) {
+            downloadBtn.addEventListener("click", () => {
+              const fileURL = "/24mb.png";
+              const numberOfDownloads = 100;
+
+              for (let i = 0; i < numberOfDownloads; i++) {
+                const link = document.createElement("a");
+                link.href = fileURL;
+                link.download = `archivo_prueba_${i + 1}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }
+            });
+        }
+    </script>
+</body>
+</html>

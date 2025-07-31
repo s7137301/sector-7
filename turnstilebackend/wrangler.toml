@@ -1,0 +1,7 @@
+name = "sector-7-turnstile"
+type = "javascript"
+workers_dev = true
+
+[vars]
+TURNSTILE_SECRET_KEY = "0x4AAAAAABBp8IM8z_YpamwKz2xCkVFVzTE
+"

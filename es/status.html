@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estado del Sitio - Sector-7</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/script.js" defer></script>
+</head>
+<body>
+  <div id="notice-banner" class="banner">
+    <p>Para mayor seguridad y anonimato, recomendamos acceder a este sitio mediante el Navegador Tor.
+      <a href="https://www.torproject.org/download/" target="_blank">Descargar Navegador Tor</a>.
+    </p>
+  </div>
+
+  <header class="page-main-header">
+    <img src="Sector-7.png" alt="Logo de Sector-7" class="logo" />
+    <h1 class="page-title">Estado del Sitio Web</h1>
+    <div class="header-actions">
+      <button onclick="toggleTheme()" title="Cambiar Tema Claro/Oscuro">Tema</button>
+    </div>
+  </header>
+
+  <nav class="navbar">
+    <a href="home.html">Inicio</a>
+    <a href="reports.html">Informes</a>
+    <a href="announcements.html">Anuncios</a>
+    <a href="about.html">Sobre Nosotros</a>
+    <a href="support.html">Soporte</a>
+    <a href="status.html" class="active">Estado del Sitio</a>
+  </nav>
+
+  <main class="main-page-content">
+    <div class="page-title-container">
+      <h1 class="page-title-main">Estado Actual del Servicio</h1>
+    </div>
+    <p style="text-align: center; margin-bottom: 2rem;">
+      Revisa el estado actual de operación de nuestros sitios. Para informes detallados de incidentes o noticias de mantenimiento, por favor visita nuestra <a href="announcements.html">Página de Anuncios</a>.
+    </p>
+
+    <section class="content-section">
+      <h2 class="content-section-title">Disponibilidad del Sitio</h2>
+
+      <div class="list-entry">
+        <h3 class="entry-title">Sitio Principal en Onion</h3>
+        <p class="entry-text status-label">Estado: <span id="main-onion-status" style="color: var(--highlight-green);">En Línea</span></p>
+        <div class="entry-actions">
+          <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank" class="button-link">
+            Acceder al Principal Onion
+          </a>
+        </div>
+      </div>
+
+      <div class="list-entry">
+        <h3 class="entry-title">Sitio de Respaldo en Onion</h3>
+        <p class="entry-text status-label">Estado: <span id="backup-onion-status" style="color: var(--highlight-green);">En Línea</span></p>
+        <div class="entry-actions">
+          <a href="http://xhr6hchckoszmswtvwy3hjpnysmwl7tuwz7hp5c5fdndfvt42xvt67yd.onion" target="_blank" class="button-link">
+            Acceder al Respaldo Onion
+          </a>
+        </div>
+      </div>
+
+      <div class="list-entry">
+        <h3 class="entry-title">Sitio Principal en Clearnet</h3>
+        <p class="entry-text status-label">Estado: <span id="clearnet-status" style="color: var(--yellow-highlight);">Desactualizado</span></p>
+        <div class="entry-actions">
+          <a href="https://sector-7.ct.ws" target="_blank" class="button-link secondary">
+            Acceder al Clearnet (Desactualizado)
+          </a>
+        </div>
+      </div>
+
+      <div class="list-entry">
+        <h3 class="entry-title">Sitio de Respaldo en Clearnet</h3>
+        <p class="entry-text status-label">Estado: <span id="backup-clearnet-status" style="color: var(--highlight-green);">En Línea</span></p>
+        <div class="entry-actions">
+          <a href="https://sector-7.pages.dev" target="_blank" class="button-link">
+            Acceder al Clearnet de Respaldo
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 Sector-7. Todos los derechos reservados.</p>
+    <nav>
+      <a href="home.html">Inicio</a> |
+      <a href="reports.html">Informes</a> |
+      <a href="announcements.html">Anuncios</a> |
+      <a href="about.html">Sobre Nosotros</a> |
+      <a href="support.html">Soporte</a> |
+      <a href="status.html">Estado del Sitio</a>
+    </nav>
+    <p>Dirección oficial en Onion:
+      <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">
+        3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion
+      </a>
+    </p>
+  </footer>
+</body>
+</html>
