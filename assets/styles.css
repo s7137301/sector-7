@@ -1,0 +1,352 @@
+:root {
+    --background-dark: #1e1e1e;
+    --text-dark: #f0f0f0;
+    --card-dark-bg: #2c2c2c;
+    --border-dark: #3f3f3f;
+    --text-muted-dark: #b0b0b0;
+
+    --background-light: #f4f6f8;
+    --text-light: #333333;
+    --card-light-bg: #ffffff;
+    --border-light: #e0e0e0;
+    --text-muted-light: #555555;
+
+    --accent-purple: #5e3089;
+    --accent-purple-rgb: 94, 48, 137; /* RGB for #5e3089 */
+    --highlight-purple: #9166cc;
+    --highlight-purple-rgb: 145, 102, 204; /* RGB for #9166cc */
+    --highlight-green: #5bc236;
+    --link-green-hover: #7ed858;
+
+    --danger-red: #d9534f;
+    --yellow-highlight: #ffd633;
+    --yellow-highlight-hover: #fff2b2;
+
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-monospace: monospace;
+
+    /* Heights for sticky elements - JS can update these if needed for super precision, 
+       but CSS can use them as fallbacks or for initial layout calculations. */
+    --tor-banner-actual-height: 40px; /* Default, JS will set a more precise one */
+    --navbar-actual-height: 53px; /* Default, JS will set a more precise one */
+}
+
+/* === GLOBAL RESET & BASE STYLES === */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* For smoother jumps if using anchor links */
+}
+
+body {
+    font-family: var(--font-primary);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    line-height: 1.7;
+    transition: background-color 0.3s, color 0.3s;
+    padding-top: var(--tor-banner-actual-height); /* Accommodate fixed Tor banner */
+}
+
+body.light-mode {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    --card-dark-bg: var(--card-light-bg); 
+    --border-dark: var(--border-light);   
+    --text-muted-dark: var(--text-muted-light);
+}
+
+/* === TYPOGRAPHY (existing) ... === */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--highlight-purple);
+}
+body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode h4, body.light-mode h5, body.light-mode h6 {
+    color: var(--accent-purple);
+}
+p { margin-top: 0; margin-bottom: 1.2rem; }
+a { color: var(--highlight-green); text-decoration: none; transition: color 0.2s ease; }
+a:hover { color: var(--link-green-hover); text-decoration: underline; }
+ul, ol { margin-left: 1.5rem; padding-left: 0; margin-bottom: 1.2rem; }
+li { margin-bottom: 0.5rem; }
+
+
+/* === BANNERS (Notice/Maintenance) === */
+.banner { /* This is the Tor banner */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--accent-purple);
+    color: white;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Highest z-index */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+.banner p { margin: 0; font-size: 0.9rem; }
+.banner a { color: var(--yellow-highlight); text-decoration: underline; }
+.banner a:hover { color: var(--yellow-highlight-hover); }
+
+
+/* === SITE HEADER === */
+.page-main-header {
+    background-color: var(--accent-purple);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid #4a256e;
+    /* This header will scroll with the page */
+}
+.page-main-header .logo { max-height: 50px; margin-right: 20px; }
+.page-main-header .site-title, .page-main-header .page-title { margin: 0; font-size: 1.8rem; font-weight: 600; color: white; }
+.page-main-header .header-actions { margin-left: auto; }
+.page-main-header .header-actions button { padding: 0.5rem 1rem; background-color: var(--highlight-purple); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9rem;}
+.page-main-header .header-actions button:hover { background-color: #7a5bb5; }
+
+
+/* === NAVIGATION BAR === */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--accent-purple);
+    padding: 0.5rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Initial subtle shadow */
+    /* Transition for properties that change when it becomes sticky or on hover */
+    transition: background-color 0.3s ease-in-out, 
+                box-shadow 0.3s ease-in-out, 
+                top 0.3s ease-in-out; 
+    /* position and z-index will be set when sticky, no transition needed for them directly */
+}
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    padding: 0.6rem 0.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color 0.2s ease, border-bottom-color 0.2s ease;
+    border-bottom: 3px solid transparent;
+}
+.navbar a:hover { color: var(--text-dark); border-bottom-color: var(--text-dark); text-decoration: none; }
+body.light-mode .navbar a:hover { color: var(--accent-purple); border-bottom-color: var(--accent-purple); }
+.navbar a.active { color: var(--yellow-highlight); font-weight: 700; border-bottom-color: var(--yellow-highlight); }
+.navbar a.active:hover { color: var(--yellow-highlight-hover); border-bottom-color: var(--yellow-highlight-hover); }
+
+.navbar.sticky {
+    position: fixed;
+    /* top: var(--tor-banner-actual-height); /* JS will set this directly via style.top for precision */
+    left: 0;
+    width: 100%;
+    z-index: 998; /* Below Tor banner, above content */
+    background-color: var(--accent-purple); /* Could be slightly different if desired */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* More pronounced shadow when sticky */
+}
+
+
+/* === MAIN CONTENT WRAPPER === */
+.main-page-content {
+    max-width: 1100px;
+    margin: 2.5rem auto; /* This margin will be above the content after the navbar */
+    padding: 0 1.5rem;
+    /* Smooth transition for padding-top when navbar sticks/unsticks */
+    transition: padding-top 0.3s ease-in-out;
+}
+/* Other .main-page-content styles remain the same */
+.page-title-container { text-align: center; margin-bottom: 2.5rem; }
+.page-title-main { font-size: 2.8rem; color: var(--highlight-purple); display: inline-block; padding-bottom: 0.75rem; border-bottom: 3px solid var(--highlight-purple); font-weight: 700; }
+body.light-mode .page-title-main { color: var(--accent-purple); border-bottom-color: var(--accent-purple); }
+
+
+/* === CONTENT SECTIONS/CARDS (existing) ... === */
+.content-section { background-color: var(--card-dark-bg); border-radius: 10px; margin-bottom: 2.5rem; padding: 2rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); border-left: 6px solid var(--highlight-purple); transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+.content-section:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(var(--highlight-purple-rgb), 0.2); }
+body.light-mode .content-section { border-left-color: var(--accent-purple); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+body.light-mode .content-section:hover { box-shadow: 0 8px 20px rgba(var(--accent-purple-rgb), 0.15); }
+.content-section-title { font-size: 1.8rem; color: var(--highlight-purple); margin-top: 0; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-dark); font-weight: 600; }
+body.light-mode .content-section-title { color: var(--accent-purple); }
+
+
+/* === LIST ENTRY (existing) ... === */
+.list-entry { padding: 1.2rem 0; border-bottom: 1px solid var(--border-dark); display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem; }
+.list-entry:last-child { border-bottom: none; padding-bottom: 0; }
+.entry-date { font-weight: 700; color: var(--text-muted-dark); flex-shrink: 0; min-width: 120px; font-size: 0.9rem; background-color: rgba(240, 240, 240, 0.05); padding: 0.25rem 0.5rem; border-radius: 4px; text-align: center; }
+body.light-mode .entry-date { background-color: #e9ecef; }
+.entry-title { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--highlight-purple); width: 100%; }
+body.light-mode .entry-title { color: var(--accent-purple); }
+.entry-title a { color: inherit; }
+.entry-title a:hover { color: var(--highlight-green); }
+.entry-summary, .entry-text { margin: 0; flex-grow: 1; font-size: 1rem; }
+.entry-summary p, .entry-text p { margin-bottom: 0.8rem; }
+.entry-summary strong, .entry-text strong { color: var(--text-dark); }
+body.light-mode .entry-summary strong, body.light-mode .entry-text strong { color: var(--text-light); }
+.entry-actions a, .entry-actions button { display: inline-block; text-decoration: none; color: white; background-color: var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 5px; font-weight: 600; font-size: 0.9rem; margin-right: 0.5rem; margin-top: 0.5rem; border: 1px solid transparent; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+.entry-actions a:hover, .entry-actions button:hover { background-color: #4a256e; color: white; text-decoration: none; }
+.entry-actions a.secondary, .entry-actions button.secondary { background-color: transparent; color: var(--highlight-green); border: 1px solid var(--highlight-green); }
+.entry-actions a.secondary:hover, .entry-actions button.secondary:hover { background-color: var(--highlight-green); color: white; border-color: var(--highlight-green); }
+
+
+/* === FAQ (existing) ... === */
+.faq-item { margin-bottom: 1rem; border: 1px solid var(--border-dark); border-radius: 8px; overflow: hidden; background-color: var(--card-dark-bg); }
+.faq-question { width: 100%; background-color: transparent; color: var(--highlight-purple); padding: 1rem 1.5rem; border: none; text-align: left; font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s; }
+body.light-mode .faq-question { color: var(--accent-purple); }
+.faq-question:hover { background-color: rgba(255,255,255,0.03); } 
+body.light-mode .faq-question:hover { background-color: rgba(0,0,0,0.03); } 
+.arrow { font-size: 1.2rem; transition: transform 0.3s; }
+.faq-item.open .arrow { transform: rotate(180deg); }
+.faq-answer { max-height: 0; overflow: hidden; background-color: transparent; padding: 0 1.5rem; transition: max-height 0.3s ease-out, padding 0.3s ease-out; font-size: 0.95rem; color: var(--text-dark); }
+body.light-mode .faq-answer { color: var(--text-light); }
+.faq-answer p { margin: 0.5rem 0 1rem 0; }
+.faq-item.open .faq-answer { max-height: 300px; padding: 1rem 1.5rem; }
+
+
+/* === ARTICLE CONTAINER (existing) ... === */
+.article-container h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+.article-container h3 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; }
+
+
+/* === BUTTONS (existing) ... === */
+button, .button-link { display: inline-block; background: var(--accent-purple); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px; font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: background-color 0.3s ease, transform 0.1s ease; }
+button:hover, .button-link:hover { background: #4a256e; text-decoration: none; color: white; transform: translateY(-1px); }
+button:active, .button-link:active { transform: translateY(0px); }
+.back-button { margin-top: 2rem; }
+
+
+/* === SITE FOOTER (existing) ... === */
+.site-footer { background-color: #222; color: #aaa; text-align: center; padding: 2.5rem 1rem; margin-top: 4rem; font-size: 0.9rem; border-top: 4px solid var(--accent-purple); }
+.site-footer nav { background-color: transparent; padding: 0.5rem 0; display: flex; justify-content: center; flex-wrap: wrap; }
+.site-footer nav a { color: var(--highlight-purple); margin: 0 8px; font-weight: 500; border-bottom: none; padding: 0.2rem; }
+.site-footer nav a:hover { color: var(--highlight-green); text-decoration: underline; border-bottom: none; }
+.site-footer p { margin-bottom: 0.5rem; }
+
+
+/* === UTILITY PAGES (existing) ... === */
+body#turnstile-page { background-color: #1a1a1a; color: #f5f5f5; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding-top: 0; }
+body#turnstile-page h1 { font-size: 2.2rem; color: var(--accent-purple); margin-bottom: 1.5rem; }
+#turnstile-form { background: #292929; border-radius: 10px; padding: 2rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); max-width: 420px; width: 90%; }
+#turnstile-form p { font-size: 1.1rem; margin-bottom: 1.5rem; color: #e0e0e0;}
+.cf-turnstile { margin: 1.5rem auto; display: flex; justify-content: center; }
+#turnstile-form button { width: 100%; margin-top: 1rem; }
+
+.utility-page-container { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; padding: 2rem; padding-top: 0;}
+.utility-page-container .logo { max-width: 100px; margin-bottom: 1.5rem; }
+.utility-page-container h1 { font-size: 2.2rem; color: var(--danger-red); margin-bottom: 1rem; }
+.utility-page-container p { font-size: 1.1rem; max-width: 600px; margin-bottom: 1.5rem; }
+.utility-page-container .home-button { margin-top: 1rem; }
+.maintenance-container h1 { animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+
+/* === RESPONSIVE STYLES (existing) ... === */
+@media (max-width: 768px) {
+    body { padding-top: var(--tor-banner-actual-height); } /* Ensure this matches JS set var or a safe fallback */
+    .page-main-header { padding: 0.75rem 1rem; flex-direction: column; text-align: center; }
+    .page-main-header .logo { margin-right: 0; margin-bottom: 0.5rem; max-height: 40px; }
+    .page-main-header .site-title, .page-main-header .page-title { font-size: 1.5rem; }
+    .page-main-header .header-actions { margin-top: 0.5rem; width: 100%; text-align: center; margin-left:0; }
+    .page-main-header .header-actions button { width: auto; }
+
+    /* Navigation bar guidelines:
+       .navbar{ 
+           When not sticky on mobile, it's part of flow.
+           When sticky on mobile, it behaves like desktop sticky.
+           Consider if mobile navbar should also be collapsible (current is horizontal).
+       }
+       .navbar.sticky {
+           top: var(--tor-banner-actual-height); /* JS sets this */
+       }
+      /* If navbar items need to stack on mobile:
+       .navbar { flex-direction: column; padding: 0.5rem; }
+       .navbar a { margin: 0.5rem 0; padding: 0.5rem 1rem; width: 90%; text-align: center; }
+       .navbar a, .navbar a:hover, .navbar a.active, .navbar a.active:hover { border-bottom-width: 2px; }
+    */
+
+
+    .main-page-content { margin: 1.5rem auto; padding: 0 1rem; }
+    .page-title-main { font-size: 2rem; }
+    .content-section { padding: 1.5rem; margin-bottom: 1.5rem; }
+    .content-section-title { font-size: 1.5rem; }
+
+    .list-entry { flex-direction: column; gap: 0.5rem; }
+    .entry-date { min-width: auto; margin-bottom: 0.5rem; align-self: flex-start; }
+    .entry-title { font-size: 1.1rem; }
+
+    .faq-question { font-size: 1rem; padding: 0.75rem 1rem; }
+    .faq-answer { padding: 0 1rem; }
+    .faq-item.open .faq-answer { padding: 0.75rem 1rem; }
+    
+    button, .button-link { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+    #turnstile-form button { font-size: 1rem; }
+
+    .lang-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(20, 20, 20, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        animation: fadeIn 0.3s ease;
+      }
+      
+      .lang-popup-box {
+        background: #111;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        text-align: center;
+        max-width: 90%;
+        color: white;
+        animation: scaleIn 0.3s ease;
+      }
+      
+      .lang-popup-box h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .lang-popup-box p {
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .lang-popup-buttons button {
+        margin: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        background-color: #00ffff;
+        color: #000;
+        transition: background 0.2s ease;
+      }
+      
+      .lang-popup-buttons button:hover {
+        background-color: #00cccc;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes scaleIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+      
