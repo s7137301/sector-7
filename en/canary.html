@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sector-7 Warrant Canary & Blockchain Verification</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+    <div id="notice-banner" class="banner">
+        <p>For enhanced security and anonymity, we recommend accessing this site via the Tor Browser. 
+            <a href="https://www.torproject.org/download/" target="_blank">Download Tor Browser</a>.
+        </p>
+        
+    </div>
+  <header class="page-main-header">
+    <img src="Sector-7.png" alt="Sector-7 Logo" class="logo">
+    <h1 class="page-title">Warrant Canary & Blockchain Verification</h1>
+  </header>
+  <nav class="navbar">
+    <a href="home.html">Home</a>
+    <a href="reports.html">Reports</a>
+    <a href="announcements.html">Announcements</a>
+    <a href="about.html">About</a> <a href="/en/partnerships.html">Partnerships</a>
+    <a href="support.html">Support</a>
+    <a href="status.html">Website Status</a>
+</nav>
+
+  <main class="main-page-content">
+    <section class="content-section" id="canary-status">
+      <h2 class="content-section-title">Warrant Canary Status</h2>
+      <p id="lastVerified">Loading...</p>
+      <p id="canaryMessage">Loading...</p>
+    </section>
+
+    <section class="content-section" id="blockchain-verification">
+      <h2 class="content-section-title">Blockchain Verification</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Block Number</th>
+            <th>Block Hash</th>
+            <th>Timestamp (UTC)</th>
+          </tr>
+        </thead>
+        <tbody id="btcBlock">
+          <tr><td colspan="3">Loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content-section" id="hosted-content">
+      <h2 class="content-section-title">Content Hosted & Relay Operations</h2>
+      <p>Sector-7 operates Tor hidden services to provide anonymous reporting channels. We host user-submitted reports, including highly sensitive or classified information. All data is encrypted and decentralized to ensure anonymity and protection.</p>
+      <p>Our relay operations help route anonymous traffic securely. We do not monitor or store content beyond technical health monitoring and abuse prevention measures.</p>
+    </section>
+
+    <section class="content-section" id="legal-requests">
+      <h2 class="content-section-title">Legal & Takedown Requests</h2>
+      <p>All legal inquiries, subpoenas, or takedown requests must be directed to:</p>
+      <p><a href="mailto:support.sector-7@protonmail.com">support.sector-7@protonmail.com</a></p>
+      <p>No other staff members are authorized to respond to such requests.</p>
+    </section>
+
+    <section class="content-section" id="verification-notes">
+      <h2 class="content-section-title">Notes on Verification</h2>
+      <ul>
+        <li>Users can independently verify the canary against the Bitcoin blockchain.</li>
+        <li>The canary timestamp and blockchain data are updated automatically via the Worker.</li>
+        <li>Any discrepancy indicates the canary has not been updated and should be treated as a warning.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 Sector-7. All rights reserved.</p>
+    <nav>
+      <a href="home.html">Home</a> | 
+      <a href="reports.html">Reports</a> |
+      <a href="announcements.html">Announcements</a> |
+      <a href="about.html">About</a> | 
+      <a href="support.html">Support</a> | 
+      <a href="status.html">Website Status</a> | 
+      <a href="policies.html">Policies</a> |
+      <a href="terms.html">Terms & Conditions</a>
+    </nav>
+    <p>Our Official Onion Address Is Located At: 
+      <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">
+        3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion
+      </a>
+    </p>
+    <p>
+        <a href="/policies.html">Policies</a> | 
+        <a href="/terms.html">Terms &amp; Conditions</a>|
+        <a href="canary.html">Warrant Canary & Blockchain Verification</a>
+      </p>
+  </footer>
+
+  <script>
+    const workerUrl = "https://canary.wampired2.workers.dev/"; 
+
+    async function updateCanary() {
+      const lastVerifiedEl = document.getElementById("lastVerified");
+      const canaryMessageEl = document.getElementById("canaryMessage");
+      const btcBlockEl = document.getElementById("btcBlock");
+
+      try {
+        const response = await fetch(workerUrl);
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+
+        lastVerifiedEl.textContent = `Last Verified: ${data.lastVerified}`;
+        canaryMessageEl.textContent = data.message;
+
+        btcBlockEl.innerHTML = `
+          <tr>
+            <td>${data.btcBlock.block_height}</td>
+            <td>${data.btcBlock.block_hash}</td>
+            <td>${new Date(data.btcBlock.block_time * 1000).toUTCString()}</td>
+          </tr>
+        `;
+      } catch (err) {
+        console.error("Error fetching canary:", err);
+        lastVerifiedEl.textContent = "Error fetching canary data.";
+        canaryMessageEl.textContent = "";
+        btcBlockEl.innerHTML = "<tr><td colspan='3'>Unable to load block info.</td></tr>";
+      }
+    }
+
+    updateCanary();
+    setInterval(updateCanary, 5 * 60 * 1000); // refresh every 5 minutes
+  </script>
+</body>
+</html>
