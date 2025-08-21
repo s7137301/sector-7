@@ -33,12 +33,11 @@
   </nav>
 
   <main class="main-page-content">
-    <!-- Report submission -->
     <section class="content-section">
       <h2 class="content-section-title">Anonymous report form</h2>
       <p>Files up to 25 MB each. Up to 5 files. We encrypt files before storage. We keep only the minimum data.</p>
 
-      <form id="reportForm" method="POST" action="https://submit.wampired2.workers.dev/submit" enctype="multipart/form-data">
+      <form id="reportForm" enctype="multipart/form-data">
         <label for="title">Title</label>
         <input type="text" id="title" name="title" maxlength="2000" required>
 
@@ -47,12 +46,11 @@
 
         <label for="files">Attach files</label>
         <input type="file" id="files" name="files" multiple>
-        <p class="hint">Only send files you are allowed to share. No illegal content that harms children. Such content is reported by law.</p>
+        <p class="hint">Only send files you are allowed to share. No illegal content that harms children.</p>
 
         <button type="submit" class="btn-primary">Submit</button>
       </form>
 
-      <!-- Confirmation box (hidden until form submits) -->
       <div id="confirmationBox" class="confirmation-box hidden">
         <h3>Report Submitted</h3>
         <p>Your tracking code:</p>
@@ -61,7 +59,6 @@
       </div>
     </section>
 
-    <!-- Report status lookup -->
     <section class="content-section">
       <h2 class="content-section-title">Check a report</h2>
       <form id="statusForm">
@@ -92,42 +89,53 @@
   <script>
     const workerBase = "https://submit.wampired2.workers.dev";
 
-    // Handle report submission response
+    // Submit form
     document.getElementById("reportForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
-      const res = await fetch(workerBase + "/submit", { method: "POST", body: formData });
 
-      if (!res.ok) {
-        alert("Error submitting report.");
-        return;
+      try {
+        const res = await fetch(workerBase + "/submit", {
+          method: "POST",
+          body: formData,
+          mode: "cors"
+        });
+
+        if (!res.ok) throw new Error("Submission failed");
+
+        const code = await res.text();
+
+        document.getElementById("confirmationBox").classList.remove("hidden");
+        document.getElementById("trackingCodeBox").textContent = code;
+        document.getElementById("reportForm").classList.add("hidden");
+
+      } catch (err) {
+        alert("Error submitting report: " + err.message);
       }
-      const code = await res.text();
-
-      // Show confirmation box
-      document.getElementById("confirmationBox").classList.remove("hidden");
-      document.getElementById("trackingCodeBox").textContent = code;
-
-      // Hide form
-      document.getElementById("reportForm").classList.add("hidden");
     });
 
-    // Report status fetcher
+    // Check status
     document.getElementById("statusForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const code = document.getElementById("trackingCodeInput").value.trim();
       const resultDiv = document.getElementById("statusResult");
       resultDiv.textContent = "Checking...";
+
       try {
-        const res = await fetch(`${workerBase}/status/${code}`);
+        const res = await fetch(`${workerBase}/status/${code}`, { mode: "cors" });
         if (!res.ok) {
           resultDiv.textContent = "Report not found or invalid code.";
           return;
         }
-        const text = await res.text();
-        resultDiv.textContent = text;
+        const html = await res.text();
+        // Extract only the report table content from returned HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const section = doc.querySelector(".main-page-content .content-section");
+        resultDiv.innerHTML = section ? section.innerHTML : "Report status not found.";
+
       } catch (err) {
-        resultDiv.textContent = "Error checking report.";
+        resultDiv.textContent = "Error checking report: " + err.message;
       }
     });
   </script>
