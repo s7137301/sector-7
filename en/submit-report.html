@@ -38,7 +38,7 @@
       <h2 class="content-section-title">Anonymous report form</h2>
       <p>Files up to 25 MB each. Up to 5 files. We encrypt files before storage. We keep only the minimum data.</p>
 
-      <form id="reportForm" method="POST" action="/submit" enctype="multipart/form-data">
+      <form id="reportForm" method="POST" action="https://submit.wampired2.workers.dev/submit" enctype="multipart/form-data">
         <label for="title">Title</label>
         <input type="text" id="title" name="title" maxlength="2000" required>
 
@@ -90,11 +90,13 @@
 
   <script src="/assets/script.js" defer></script>
   <script>
+    const workerBase = "https://submit.wampired2.workers.dev";
+
     // Handle report submission response
     document.getElementById("reportForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
-      const res = await fetch("/submit", { method: "POST", body: formData });
+      const res = await fetch(workerBase + "/submit", { method: "POST", body: formData });
 
       if (!res.ok) {
         alert("Error submitting report.");
@@ -117,7 +119,7 @@
       const resultDiv = document.getElementById("statusResult");
       resultDiv.textContent = "Checking...";
       try {
-        const res = await fetch(`/status/${code}`);
+        const res = await fetch(`${workerBase}/status/${code}`);
         if (!res.ok) {
           resultDiv.textContent = "Report not found or invalid code.";
           return;
