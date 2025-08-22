@@ -86,58 +86,77 @@
   </footer>
 
   <script src="/assets/script.js" defer></script>
-  <script>
-    const workerBase = "https://submit.wampired2.workers.dev";
+<script>
+  const workerBase = "https://submit.wampired2.workers.dev";
 
-    // Submit form
-    document.getElementById("reportForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
+  // Submit form
+  document.getElementById("reportForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
 
-      try {
-        const res = await fetch(workerBase + "/submit", {
-          method: "POST",
-          body: formData,
-          mode: "cors"
-        });
+    try {
+      const res = await fetch(workerBase + "/submit", {
+        method: "POST",
+        body: formData,
+        mode: "cors"
+      });
 
-        if (!res.ok) throw new Error("Submission failed");
+      if (!res.ok) throw new Error("Submission failed");
 
-        const code = await res.text();
+      const html = await res.text();
 
-        document.getElementById("confirmationBox").classList.remove("hidden");
-        document.getElementById("trackingCodeBox").textContent = code;
-        document.getElementById("reportForm").classList.add("hidden");
+      // Parse the returned HTML page to extract the tracking code
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const codeEl = doc.querySelector(".mono"); // Worker puts code in <strong class="mono">
 
-      } catch (err) {
-        alert("Error submitting report: " + err.message);
+      if (!codeEl) throw new Error("Tracking code not found in response");
+
+      document.getElementById("confirmationBox").classList.remove("hidden");
+      document.getElementById("trackingCodeBox").textContent = codeEl.textContent.trim();
+      document.getElementById("reportForm").classList.add("hidden");
+
+    } catch (err) {
+      alert("Error submitting report: " + err.message);
+    }
+  });
+
+  // Check status
+  document.getElementById("statusForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const code = document.getElementById("trackingCodeInput").value.trim();
+    const resultDiv = document.getElementById("statusResult");
+    resultDiv.textContent = "Checking...";
+
+    try {
+      // Worker expects POST to /check with FormData
+      const formData = new FormData();
+      formData.append("report_code", code);
+
+      const res = await fetch(workerBase + "/check", {
+        method: "POST",
+        body: formData,
+        mode: "cors"
+      });
+
+      if (!res.ok) {
+        resultDiv.textContent = "Report not found or invalid code.";
+        return;
       }
-    });
 
-    // Check status
-    document.getElementById("statusForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const code = document.getElementById("trackingCodeInput").value.trim();
-      const resultDiv = document.getElementById("statusResult");
-      resultDiv.textContent = "Checking...";
+      const html = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
 
-      try {
-        const res = await fetch(`${workerBase}/status/${code}`, { mode: "cors" });
-        if (!res.ok) {
-          resultDiv.textContent = "Report not found or invalid code.";
-          return;
-        }
-        const html = await res.text();
-        // Extract only the report table content from returned HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const section = doc.querySelector(".main-page-content .content-section");
-        resultDiv.innerHTML = section ? section.innerHTML : "Report status not found.";
+      const section = doc.querySelector(".main-page-content .content-section");
+      resultDiv.innerHTML = section ? section.innerHTML : "Report status not found.";
 
-      } catch (err) {
-        resultDiv.textContent = "Error checking report: " + err.message;
-      }
-    });
-  </script>
+    } catch (err) {
+      resultDiv.textContent = "Error checking report: " + err.message;
+    }
+  });
+</script>
+
 </body>
 </html>
+
