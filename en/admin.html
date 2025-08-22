@@ -45,107 +45,129 @@
 
 <script>
 const workerBase = "https://submit.wampired2.workers.dev";
+const adminToken = prompt("Enter admin token"); // or store securely
 
-document.getElementById("loadReportsBtn").addEventListener("click", async () => {
-  const token = document.getElementById("adminToken").value.trim();
-  if (!token) return alert("Enter admin token");
+const reportsTable = document.getElementById("reportsTable");
 
+// Fetch and populate reports
+async function populateReports(statusFilter = "") {
   try {
-    const res = await fetch(workerBase + `/admin/list?token=${encodeURIComponent(token)}`);
+    const url = new URL(workerBase + "/admin/list");
+    url.searchParams.set("token", adminToken);
+    if (statusFilter) url.searchParams.set("status", statusFilter);
+
+    const res = await fetch(url.toString(), { method: "GET" });
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
-    populateReports(data.reports, token);
-  } catch (err) {
-    alert("Error loading reports: " + err.message);
-  }
-});
 
-async function populateReports(reports, token) {
-  const tbody = document.querySelector("#reportsTable tbody");
-  tbody.innerHTML = "";
+    // Clear table
+    reportsTable.innerHTML = "";
 
-  for (const r of reports) {
-    const tr = document.createElement("tr");
+    data.reports.forEach(report => {
+      const row = document.createElement("tr");
 
-    const statusSelect = document.createElement("select");
-    ["Received","In Review","Closed","Rejected"].forEach(s => {
-      const opt = document.createElement("option");
-      opt.value = s;
-      opt.textContent = s;
-      if (s === r.status) opt.selected = true;
-      statusSelect.appendChild(opt);
-    });
+      row.innerHTML = `
+        <td>${report.report_code}</td>
+        <td>${report.submitted_at}</td>
+        <td>
+          <select class="status-select">
+            <option ${report.status === "Received" ? "selected" : ""}>Received</option>
+            <option ${report.status === "In Review" ? "selected" : ""}>In Review</option>
+            <option ${report.status === "Resolved" ? "selected" : ""}>Resolved</option>
+          </select>
+        </td>
+        <td>
+          <button class="view-btn">View Files</button>
+        </td>
+        <td>
+          <textarea class="notes-input" placeholder="Add notes...">${report.notes || ""}</textarea>
+        </td>
+        <td>
+          <button class="save-btn">Save</button>
+        </td>
+      `;
 
-    const notesInput = document.createElement("textarea");
-    notesInput.rows = 2;
-    notesInput.value = r.notes || "";
+      // View/download files
+      row.querySelector(".view-btn").addEventListener("click", async () => {
+        const filesRes = await fetch(workerBase + "/check", {
+          method: "POST",
+          body: new FormData().append("report_code", report.report_code),
+          mode: "cors"
+        });
+        if (!filesRes.ok) {
+          alert("Failed to fetch files");
+          return;
+        }
+        const result = await filesRes.json();
+        const fileList = result.files.map(f => {
+          return `<li>
+            <a href="${workerBase}/admin/download?token=${adminToken}&kv_key=${f.kv_key}" target="_blank">${f.orig_filename}</a>
+            <input type="text" placeholder="Annotation" data-kv="${f.kv_key}" class="annotation-input">
+          </li>`;
+        }).join("");
+        const fileDiv = document.createElement("div");
+        fileDiv.innerHTML = `<ul>${fileList}</ul>`;
+        row.appendChild(fileDiv);
+      });
 
-    // Fetch files for this report
-    const filesRes = await fetch(workerBase + "/check", {
-      method: "POST",
-      body: new FormData(Object.assign(new FormData(), { append: (k,v)=>k==="report_code"?v:null })),
-    });
-    let files = [];
-    try {
-      const formData = new FormData();
-      formData.append("report_code", r.report_code);
-      const fr = await fetch(workerBase + "/check", { method:"POST", body: formData });
-      if (fr.ok) files = (await fr.json()).files;
-    } catch(e){ console.error(e); }
+      // Save notes/status
+      row.querySelector(".save-btn").addEventListener("click", async () => {
+        const status = row.querySelector(".status-select").value;
+        const notes = row.querySelector(".notes-input").value;
 
-    const filesTd = document.createElement("td");
-    files.forEach(f => {
-      const row = document.createElement("div");
-      row.className = "file-row";
-      const link = document.createElement("a");
-      link.href = workerBase + `/admin/download?token=${encodeURIComponent(token)}&kv_key=${encodeURIComponent(f.kv_key)}`;
-      link.textContent = f.orig_filename + ` (${f.bytes} bytes)`;
-      link.target = "_blank";
-
-      const annotation = document.createElement("input");
-      annotation.placeholder = "Add annotation";
-      annotation.className = "annotation";
-
-      row.appendChild(link);
-      row.appendChild(annotation);
-      filesTd.appendChild(row);
-    });
-
-    const actionsTd = document.createElement("td");
-    const saveBtn = document.createElement("button");
-    saveBtn.textContent = "Save";
-    saveBtn.addEventListener("click", async () => {
-      try {
         const formData = new FormData();
-        formData.append("token", token);
-        formData.append("report_code", r.report_code);
-        formData.append("status", statusSelect.value);
-        formData.append("notes", notesInput.value);
+        formData.append("token", adminToken);
+        formData.append("report_code", report.report_code);
+        formData.append("status", status);
+        formData.append("notes", notes);
 
-        const res = await fetch(workerBase + "/admin/update", { method: "POST", body: formData });
-        if (!res.ok) throw new Error(await res.text());
-        alert("Updated successfully!");
-      } catch (err) {
-        alert("Error updating: " + err.message);
-      }
+        try {
+          const res = await fetch(workerBase + "/admin/update", {
+            method: "POST",
+            body: formData
+          });
+          if (!res.ok) throw new Error(await res.text());
+          alert("Saved successfully!");
+        } catch (err) {
+          alert("Error saving: " + err.message);
+        }
+
+        // Save file annotations if any
+        row.querySelectorAll(".annotation-input").forEach(async input => {
+          const kv = input.dataset.kv;
+          const annotation = input.value;
+          if (!annotation) return;
+
+          const af = new FormData();
+          af.append("token", adminToken);
+          af.append("kv_key", kv);
+          af.append("annotation", annotation);
+
+          try {
+            await fetch(workerBase + "/admin/file-annotation", {
+              method: "POST",
+              body: af
+            });
+          } catch (err) {
+            console.error("Failed to save annotation:", err);
+          }
+        });
+      });
+
+      reportsTable.appendChild(row);
     });
 
-    tr.innerHTML = `<td>${r.report_code}</td>
-                    <td>${r.submitted_at}</td>
-                    <td></td>
-                    <td>${r.title}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>`;
-
-    tr.children[2].appendChild(statusSelect);
-    tr.children[4].appendChild(notesInput);
-    tr.children[5].appendChild(filesTd);
-    tr.children[6].appendChild(saveBtn);
-
-    tbody.appendChild(tr);
+  } catch (err) {
+    console.error("Error populating reports:", err);
   }
 }
+
+// Initialize
+document.addEventListener("DOMContentLoaded", () => {
+  populateReports();
+});
 </script>
+
 </body>
 </html>
+
