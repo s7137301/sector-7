@@ -85,7 +85,7 @@
     </p>
   </footer>
 
-  <script src="/assets/script.js" defer></script>
+<script src="/assets/script.js" defer></script>
 <script>
   const workerBase = "https://submit.wampired2.workers.dev";
 
@@ -101,19 +101,13 @@
         mode: "cors"
       });
 
-      if (!res.ok) throw new Error("Submission failed");
+      if (!res.ok) throw new Error(await res.text());
 
-      const html = await res.text();
-
-      // Parse the returned HTML page to extract the tracking code
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-      const codeEl = doc.querySelector(".mono"); // Worker puts code in <strong class="mono">
-
-      if (!codeEl) throw new Error("Tracking code not found in response");
+      // Worker now returns the tracking code directly as text
+      const code = (await res.text()).trim();
 
       document.getElementById("confirmationBox").classList.remove("hidden");
-      document.getElementById("trackingCodeBox").textContent = codeEl.textContent.trim();
+      document.getElementById("trackingCodeBox").textContent = code;
       document.getElementById("reportForm").classList.add("hidden");
 
     } catch (err) {
@@ -129,7 +123,6 @@
     resultDiv.textContent = "Checking...";
 
     try {
-      // Worker expects POST to /check with FormData
       const formData = new FormData();
       formData.append("report_code", code);
 
@@ -140,16 +133,23 @@
       });
 
       if (!res.ok) {
-        resultDiv.textContent = "Report not found or invalid code.";
+        const text = await res.text();
+        resultDiv.textContent = text || "Report not found or invalid code.";
         return;
       }
 
-      const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
+      const result = await res.json();
+      let msg = `Status: ${result.report.status}\nSubmitted: ${result.report.submitted_at}\n`;
+      if (result.report.notes) msg += `Notes: ${result.report.notes}\n`;
 
-      const section = doc.querySelector(".main-page-content .content-section");
-      resultDiv.innerHTML = section ? section.innerHTML : "Report status not found.";
+      if (result.files.length) {
+        msg += "Files:\n";
+        result.files.forEach(f => {
+          msg += ` - ${f.orig_filename} (${f.bytes} bytes) [${f.scan_status}]\n`;
+        });
+      }
+
+      resultDiv.textContent = msg;
 
     } catch (err) {
       resultDiv.textContent = "Error checking report: " + err.message;
@@ -157,7 +157,9 @@
   });
 </script>
 
+
 </body>
 </html>
+
 
 
