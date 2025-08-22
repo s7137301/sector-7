@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sector-7 Admin Dashboard</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <style>
+    body { background: #121212; color: #eee; font-family: sans-serif; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #555; padding: 8px; text-align: left; }
+    th { background-color: #222; color: #fff; }
+    tr:nth-child(even) { background-color: #1e1e1e; }
+    button { cursor: pointer; padding: 4px 8px; margin: 2px; }
+    select, input { margin: 0 8px; }
+    /* Modal styles */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+             background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+    .modal-content { background: #222; padding: 20px; border-radius: 8px; width: 90%; max-width: 600px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h2 { margin: 0; }
+    .close { cursor: pointer; font-size: 1.5em; }
+    ul { padding-left: 20px; }
+    a { color: #0af; }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+
+  <label>Admin Token: <input type="password" id="adminToken"></label>
+  <label>Status Filter:
+    <select id="statusFilter">
+      <option value="">All</option>
+      <option value="Received">Received</option>
+      <option value="Open">Open</option>
+      <option value="Closed">Closed</option>
+    </select>
+  </label>
+  <button id="loadReports">Load Reports</button>
+
+  <table id="reportsTable">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Submitted At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal" id="reportModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle"></h2>
+        <span class="close" id="closeModal">&times;</span>
+      </div>
+      <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+      <p><strong>Notes:</strong> <span id="modalNotes"></span></p>
+      <p><strong>Files:</strong></p>
+      <ul id="modalFiles"></ul>
+    </div>
+  </div>
+
+  <script>
+    const base = "https://submit.wampired2.workers.dev";
+    const reportsTable = document.querySelector("#reportsTable tbody");
+    const modal = document.getElementById("reportModal");
+    const closeModalBtn = document.getElementById("closeModal");
+
+    async function loadReports() {
+      const token = document.getElementById("adminToken").value.trim();
+      const status = document.getElementById("statusFilter").value;
+      if (!token) return alert("Enter admin token");
+
+      const url = new URL(base + "/admin/list");
+      url.searchParams.set("token", token);
+      if (status) url.searchParams.set("status", status);
+
+      const res = await fetch(url);
+      if (!res.ok) return alert("Error loading reports: " + res.statusText);
+      const data = await res.json();
+      reportsTable.innerHTML = "";
+
+      for (const r of data.reports) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${r.report_code}</td>
+          <td>${r.title}</td>
+          <td>${r.status}</td>
+          <td>${r.submitted_at}</td>
+          <td><button onclick="viewReport('${r.report_code}')">View</button></td>
+        `;
+        reportsTable.appendChild(tr);
+      }
+    }
+
+    async function viewReport(code) {
+      const token = document.getElementById("adminToken").value.trim();
+      if (!token) return alert("Enter admin token");
+
+      const formData = new URLSearchParams({ report_code: code });
+      const res = await fetch(base + "/check", { method: "POST", body: formData });
+      if (!res.ok) return alert("Error fetching report: " + res.statusText);
+      const data = await res.json();
+
+      document.getElementById("modalTitle").textContent = data.report.title;
+      document.getElementById("modalStatus").textContent = data.report.status;
+      document.getElementById("modalNotes").textContent = data.report.notes || "(none)";
+
+      const filesList = document.getElementById("modalFiles");
+      filesList.innerHTML = "";
+      for (const f of data.files) {
+        const kvKey = encodeURIComponent(f.kv_key || f.kv_key_full || "");
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${base}/admin/download?token=${encodeURIComponent(token)}&kv_key=${kvKey}" target="_blank">${f.orig_filename}</a>`;
+        filesList.appendChild(li);
+      }
+
+      modal.style.display = "flex";
+    }
+
+    closeModalBtn.onclick = () => { modal.style.display = "none"; };
+    window.onclick = (e) => { if(e.target === modal) modal.style.display = "none"; };
+    document.getElementById("loadReports").addEventListener("click", loadReports);
+  </script>
+</body>
+</html>
