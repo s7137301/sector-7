@@ -1,173 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Panel - Sector 7 Reports</title>
-  <link rel="stylesheet" href="/assets/styles.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Sector 7 – Admin</title>
   <style>
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-    th { background: #222; color: #fff; }
-    input, textarea, select { width: 100%; box-sizing: border-box; }
-    .file-row { display: flex; align-items: center; gap: 0.5rem; }
-    .file-row button { flex-shrink: 0; }
-    .annotation { width: 100%; margin-top: 0.25rem; }
+    body { font-family: system-ui, Arial, sans-serif; margin: 16px; }
+    .row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+    .grid { display: grid; gap: 12px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 12px; }
+    .muted { color: #666; font-size: 12px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #eee; padding: 8px; text-align: left; vertical-align: top; }
+    .btn { padding: 6px 10px; border: 1px solid #aaa; border-radius: 8px; background: #fafafa; cursor: pointer; }
+    .btn:hover { background: #f0f0f0; }
+    textarea, select, input[type="text"] { width: 100%; padding: 6px; }
+    details > summary { cursor: pointer; font-weight: 600; }
+    code { background: #f7f7f7; padding: 1px 4px; border-radius: 4px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Admin Panel - Sector 7 Reports</h1>
-  </header>
+  <h1>Admin Dashboard</h1>
 
-  <section>
-    <label for="adminToken">Admin Token:</label>
-    <input type="password" id="adminToken" placeholder="Enter admin token" />
-    <button id="loadReportsBtn">Load Reports</button>
-  </section>
+  <div class="card grid" style="max-width: 700px;">
+    <label>Worker Base URL
+      <input id="base" type="text" value="https://submit.wampired2.workers.dev"/>
+    </label>
+    <label>Admin Token
+      <input id="token" type="text" placeholder="paste ADMIN_TOKEN"/>
+    </label>
+    <div class="row">
+      <div></div>
+      <button id="loadReports" class="btn">Load Reports</button>
+    </div>
+    <label>Status Filter (optional)
+      <input id="statusFilter" type="text" placeholder="e.g. Received / In Review / Closed"/>
+    </label>
+  </div>
 
-  <section id="reportsSection">
-    <table id="reportsTable">
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Submitted</th>
-          <th>Status</th>
-          <th>Title</th>
-          <th>Notes</th>
-          <th>Files</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
+  <div id="reports" class="grid" style="margin-top: 16px;"></div>
 
-<script>
-const workerBase = "https://submit.wampired2.workers.dev";
-const adminToken = prompt("Enter admin token"); // or store securely
+  <script>
+    const el = (sel) => document.querySelector(sel);
+    const mk = (tag, props = {}, children = []) => {
+      const n = document.createElement(tag);
+      Object.entries(props).forEach(([k,v]) => (k in n) ? n[k] = v : n.setAttribute(k, v));
+      children.forEach(c => n.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
+      return n;
+    };
 
-const reportsTable = document.getElementById("reportsTable");
+    el("#loadReports").addEventListener("click", populateReports);
 
-// Fetch and populate reports
-async function populateReports(statusFilter = "") {
-  try {
-    const url = new URL(workerBase + "/admin/list");
-    url.searchParams.set("token", adminToken);
-    if (statusFilter) url.searchParams.set("status", statusFilter);
+    async function apiGet(path) {
+      const base = el("#base").value.trim();
+      const token = encodeURIComponent(el("#token").value.trim());
+      const u = `${base}${path}${path.includes("?") ? "&" : "?"}token=${token}`;
+      const res = await fetch(u, { mode: "cors" });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    }
+    async function apiPost(path, data) {
+      const base = el("#base").value.trim();
+      const form = new FormData();
+      Object.entries(data).forEach(([k, v]) => form.append(k, v));
+      const res = await fetch(`${base}${path}`, { method: "POST", body: form, mode: "cors" });
+      if (!res.ok) throw new Error(await res.text());
+      return res.text();
+    }
 
-    const res = await fetch(url.toString(), { method: "GET" });
-    if (!res.ok) throw new Error(await res.text());
-    const data = await res.json();
+    async function populateReports() {
+      const base = el("#base").value.trim();
+      const token = el("#token").value.trim();
+      if (!base || !token) { alert("Enter base URL and admin token"); return; }
 
-    // Clear table
-    reportsTable.innerHTML = "";
+      const filter = el("#statusFilter").value.trim();
+      const q = filter ? `/admin/list?status=${encodeURIComponent(filter)}` : "/admin/list";
+      const { reports } = await apiGet(q);
 
-    data.reports.forEach(report => {
-      const row = document.createElement("tr");
+      const out = el("#reports");
+      out.innerHTML = "";
 
-      row.innerHTML = `
-        <td>${report.report_code}</td>
-        <td>${report.submitted_at}</td>
-        <td>
-          <select class="status-select">
-            <option ${report.status === "Received" ? "selected" : ""}>Received</option>
-            <option ${report.status === "In Review" ? "selected" : ""}>In Review</option>
-            <option ${report.status === "Resolved" ? "selected" : ""}>Resolved</option>
-          </select>
-        </td>
-        <td>
-          <button class="view-btn">View Files</button>
-        </td>
-        <td>
-          <textarea class="notes-input" placeholder="Add notes...">${report.notes || ""}</textarea>
-        </td>
-        <td>
-          <button class="save-btn">Save</button>
-        </td>
-      `;
+      reports.forEach(r => {
+        const reportCard = mk("div", { className: "card grid" }, [
+          mk("div", {}, [
+            mk("div", { className: "row" }, [
+              mk("div", {}, [ mk("strong", {}, [`${r.title || "(no title)"}`]) ]),
+              mk("div", {}, [ mk("span", { className: "muted" }, [r.submitted_at]) ])
+            ]),
+            mk("div", { className: "muted" }, [`Code: `, mk("code", {}, [r.report_code]), ` • Status: ${r.status}`])
+          ]),
+          mk("div", {}, [
+            mk("details", {}, [
+              mk("summary", {}, ["Open details / files"]),
+              mk("div", { style: "margin-top:8px" }, [
+                mk("div", { className: "grid", style: "max-width:700px;" }, [
+                  mk("label", {}, ["Update report status",
+                    mk("select", { id: `status-${r.report_code}` }, [
+                      "Received","In Review","Closed"
+                    ].map(s => mk("option", { value: s, selected: s === r.status }, [s])))
+                  ]),
+                  mk("label", {}, ["Report notes",
+                    mk("textarea", { id: `notes-${r.report_code}`, rows: 3 })
+                  ]),
+                  mk("div", { className: "row" }, [
+                    mk("div"),
+                    mk("button", {
+                      className: "btn",
+                      onclick: async () => {
+                        try {
+                          await apiPost("/admin/update", {
+                            token,
+                            report_code: r.report_code,
+                            status: el(`#status-${r.report_code}`).value,
+                            notes:  el(`#notes-${r.report_code}`).value
+                          });
+                          alert("Report updated");
+                        } catch (e) { alert("Update failed: " + e.message); }
+                      }
+                    }, ["Save report"])
+                  ]),
+                  mk("div", {}, [ mk("h4", {}, ["Files"]) ]),
+                  mk("div", { id: `files-${r.report_code}` }, [ mk("div", { className: "muted" }, ["Loading files..."]) ])
+                ])
+              ])
+            ])
+          ])
+        ]);
 
-      // View/download files
-      row.querySelector(".view-btn").addEventListener("click", async () => {
-        const filesRes = await fetch(workerBase + "/check", {
-          method: "POST",
-          body: new FormData().append("report_code", report.report_code),
-          mode: "cors"
-        });
-        if (!filesRes.ok) {
-          alert("Failed to fetch files");
+        out.appendChild(reportCard);
+
+        // Load files for each report
+        populateFiles(r.report_code);
+      });
+    }
+
+    async function populateFiles(reportCode) {
+      try {
+        const { files } = await apiGet(`/admin/files?report_code=${encodeURIComponent(reportCode)}`);
+        const wrap = el(`#files-${CSS.escape(reportCode)}`);
+        if (!files.length) {
+          wrap.innerHTML = "<div class='muted'>No files</div>";
           return;
         }
-        const result = await filesRes.json();
-        const fileList = result.files.map(f => {
-          return `<li>
-            <a href="${workerBase}/admin/download?token=${adminToken}&kv_key=${f.kv_key}" target="_blank">${f.orig_filename}</a>
-            <input type="text" placeholder="Annotation" data-kv="${f.kv_key}" class="annotation-input">
-          </li>`;
-        }).join("");
-        const fileDiv = document.createElement("div");
-        fileDiv.innerHTML = `<ul>${fileList}</ul>`;
-        row.appendChild(fileDiv);
-      });
 
-      // Save notes/status
-      row.querySelector(".save-btn").addEventListener("click", async () => {
-        const status = row.querySelector(".status-select").value;
-        const notes = row.querySelector(".notes-input").value;
+        const tbl = mk("table", {}, [
+          mk("thead", {}, [
+            mk("tr", {}, [
+              mk("th", {}, ["Filename"]),
+              mk("th", {}, ["Size"]),
+              mk("th", {}, ["SHA256"]),
+              mk("th", {}, ["Status"]),
+              mk("th", {}, ["Notes"]),
+              mk("th", {}, ["Actions"])
+            ])
+          ]),
+          mk("tbody", {},
+            files.map(f => mk("tr", {}, [
+              mk("td", {}, [ f.filename ]),
+              mk("td", {}, [ String(f.bytes || 0) ]),
+              mk("td", {}, [ mk("code", {}, [ f.sha256_hex || "" ]) ]),
+              mk("td", {}, [
+                mk("select", { id: `fstat-${f.id}` }, [
+                  "pending","safe","malicious","restricted"
+                ].map(s => mk("option", { value: s, selected: s === (f.status || "pending") }, [s])))
+              ]),
+              mk("td", {}, [
+                mk("textarea", { id: `fnotes-${f.id}`, rows: 2 }, [ f.notes || "" ])
+              ]),
+              mk("td", {}, [
+                mk("a", {
+                  href: `${el("#base").value.trim()}/file/${encodeURIComponent(f.id)}?token=${encodeURIComponent(el("#token").value.trim())}`,
+                  target: "_blank",
+                  className: "btn"
+                }, ["Open"]),
+                document.createTextNode(" "),
+                mk("a", {
+                  href: `${el("#base").value.trim()}/file/${encodeURIComponent(f.id)}?token=${encodeURIComponent(el("#token").value.trim())}&download=1`,
+                  className: "btn"
+                }, ["Download"]),
+                document.createTextNode(" "),
+                mk("button", {
+                  className: "btn",
+                  onclick: async () => {
+                    try {
+                      await apiPost("/admin/file/update", {
+                        token: el("#token").value.trim(),
+                        id: f.id,
+                        status: el(`#fstat-${f.id}`).value,
+                        notes:  el(`#fnotes-${f.id}`).value
+                      });
+                      alert("File updated");
+                    } catch (e) { alert("File update failed: " + e.message); }
+                  }
+                }, ["Save"])
+              ])
+            ]))
+          )
+        ]);
 
-        const formData = new FormData();
-        formData.append("token", adminToken);
-        formData.append("report_code", report.report_code);
-        formData.append("status", status);
-        formData.append("notes", notes);
+        wrap.innerHTML = "";
+        wrap.appendChild(tbl);
 
-        try {
-          const res = await fetch(workerBase + "/admin/update", {
-            method: "POST",
-            body: formData
-          });
-          if (!res.ok) throw new Error(await res.text());
-          alert("Saved successfully!");
-        } catch (err) {
-          alert("Error saving: " + err.message);
-        }
-
-        // Save file annotations if any
-        row.querySelectorAll(".annotation-input").forEach(async input => {
-          const kv = input.dataset.kv;
-          const annotation = input.value;
-          if (!annotation) return;
-
-          const af = new FormData();
-          af.append("token", adminToken);
-          af.append("kv_key", kv);
-          af.append("annotation", annotation);
-
-          try {
-            await fetch(workerBase + "/admin/file-annotation", {
-              method: "POST",
-              body: af
-            });
-          } catch (err) {
-            console.error("Failed to save annotation:", err);
-          }
-        });
-      });
-
-      reportsTable.appendChild(row);
-    });
-
-  } catch (err) {
-    console.error("Error populating reports:", err);
-  }
-}
-
-// Initialize
-document.addEventListener("DOMContentLoaded", () => {
-  populateReports();
-});
-</script>
-
+      } catch (e) {
+        const wrap = el(`#files-${CSS.escape(reportCode)}`);
+        wrap.innerHTML = `<div class="muted">Failed to load files: ${e.message}</div>`;
+      }
+    }
+  </script>
 </body>
 </html>
-
