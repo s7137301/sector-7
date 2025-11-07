@@ -34,6 +34,43 @@
 
   <main class="main-page-content">
     <section class="content-section">
+    <h2 class="content-section-title">🟡 Clearnet Reporting System – Temporary Outage Notice</h2>
+    <p>
+        We are currently experiencing a service disruption affecting the online reporting interface for our clearnet site. This outage is the result of ongoing infrastructure maintenance and a recent regression in our form submission handler, which has impacted both client-side validation and backend routing for report intake.
+    </p>
+    <p>
+        Specifically, the issue stems from a misalignment between the updated JavaScript validation schema and the legacy API endpoint responsible for ingesting structured report payloads. As a result, users attempting to submit reports via the web interface may encounter failed submissions, missing confirmation messages, or unexpected redirects. We have temporarily disabled the reporting form to prevent further confusion and ensure data integrity.
+    </p>
+    <p>
+        Our engineering team is actively working to resolve the issue. This includes:
+        <ul>
+            <li>Rolling back recent changes to the form validation logic and endpoint mappings</li>
+            <li>Auditing the NGINX reverse proxy rules and WAF (Web Application Firewall) behavior for anomalies</li>
+            <li>Revalidating TLS certificate chains and CORS headers to ensure secure cross-origin requests</li>
+            <li>Rebuilding the CI/CD pipeline to include stricter pre-deployment integration tests for form workflows</li>
+        </ul>
+    </p>
+    <p>
+        In the meantime, we ask all users to submit reports manually via email. Please include the following in your message to help us triage and respond efficiently:
+        <ul>
+            <li>Subject line: <strong>“Clearnet Report Submission”</strong></li>
+            <li>Report type (e.g., abuse, vulnerability, feedback)</li>
+            <li>Detailed description of the issue or observation</li>
+            <li>Relevant URLs, timestamps, and any supporting evidence (e.g., screenshots, logs)</li>
+        </ul>
+        Send your report to: <a href="mailto:reports@sector-7.org">reports@sector-7.org</a>
+    </p>
+    <p>
+        For the most current contact methods, escalation channels, or to verify the status of this issue, please refer to our official <a href="https://sector-7.pages.dev/en/contact" target="_blank" rel="noopener noreferrer">Contact Page</a>. This page is hosted independently of our primary infrastructure and remains operational during this incident.
+    </p>
+    <p>
+        We understand the importance of timely and secure reporting, especially in high-sensitivity environments. Please rest assured that all submitted reports are handled with strict confidentiality and routed through our secure internal triage system. If you require encrypted communication, please request our PGP key via the contact page or specify your preferred secure channel in your email.
+    </p>
+    <p>
+        We will post a follow-up once the clearnet reporting system has been fully restored. Thank you for your patience, your trust, and your continued vigilance in helping us maintain operational integrity.
+    </p>
+</section>
+   <!-- <section class="content-section">
       <h2 class="content-section-title">Anonymous report form</h2>
       <p>Files up to 25 MB each. Up to 5 files. We encrypt files before storage. We keep only the minimum data.</p>
 
@@ -68,7 +105,7 @@
       </form>
       <div id="statusResult" class="status-result"></div>
     </section>
-  </main>
+  </main> -->
 
   <footer class="site-footer">
     <p>© 2025 Sector 7. All rights reserved.</p>
@@ -160,6 +197,7 @@
 
 </body>
 </html>
+
 
 
 
