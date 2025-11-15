@@ -85,8 +85,8 @@
 
         <section class="content-section">
             <h2 class="content-section-title">File Download Test</h2>
-            <p>This section is for testing file downloads. Clicking the button will attempt to download a test file multiple times.If these files download but reports don't please contact support@sector-7.org</p>
-            <button id="download-button" class="button-link">Download 100 Test Copies</button>
+            <p>This section is for testing file downloads. Clicking the button will attempt to download a test file. If these files download but reports don't. Please contact support@sector-7.org</p>
+            <button id="download-button" class="button-link">Download 10GB Test File.</button>
         </section>
 
        
@@ -122,26 +122,26 @@
 
     <script src="/assets/script.js" defer></script>
     <script>
-        // Download button script
-        const downloadBtn = document.getElementById("download-button");
-        if (downloadBtn) {
-            downloadBtn.addEventListener("click", () => {
-              const fileURL = "/en/24mb.png";
-              const numberOfDownloads = 100;
+const downloadBtn = document.getElementById("download-button");
+if (downloadBtn) {
+    downloadBtn.addEventListener("click", () => {
+        // Direct URL to your R2-hosted file
+        const fileURL = "https://files.sector-7.org/10GB.bin";
 
-              for (let i = 0; i < numberOfDownloads; i++) {
-                const link = document.createElement("a");
-                link.href = fileURL;
-                link.download = `static_file_${i + 1}.png`; 
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }
-            });
-        }
-    </script>
+        // Create a temporary link and click it to trigger download
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = "10GB-Test-File.bin"; // This is the filename the user sees
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+}
+</script>
+
 </body>
 </html>
+
 
 
 
