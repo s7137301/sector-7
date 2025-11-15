@@ -121,26 +121,17 @@
     </footer>
 
     <script src="/assets/script.js" defer></script>
-    <script>
+<script>
 const downloadBtn = document.getElementById("download-button");
-if (downloadBtn) {
-    downloadBtn.addEventListener("click", () => {
-        // Direct URL to your R2-hosted file
-        const fileURL = "https://files.sector-7.org/10GB.bin";
-
-        // Create a temporary link and click it to trigger download
-        const link = document.createElement("a");
-        link.href = fileURL;
-        link.download = "10GB-Test-File.bin"; // This is the filename the user sees
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    });
-}
+downloadBtn.addEventListener("click", () => {
+    // Worker URL
+    window.location.href = "https://fileproxy.wampired2.workers.dev";
+});
 </script>
 
 </body>
 </html>
+
 
 
 
