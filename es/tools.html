@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta name="google-adsense-account" content="ca-pub-3823162250407128">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Herramientas y recursos de Sector-7 para informes, transparencia y estado del sitio.">
+    <meta name="keywords" content="Sector-7 herramientas, prueba de velocidad, informes, búsqueda">
+    <title>Herramientas - Sector-7</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+    <div id="notice-banner" class="banner">
+        <p>Este sitio también está disponible en la red TOR para mayor anonimato. <a href="/en/onion.html">Más información</a></p>
+        <button onclick="document.getElementById('notice-banner').style.display='none';">X</button>
+    </div>
+
+    <header class="page-main-header">
+        <img src="Sector-7.png" alt="Logotipo de Sector-7" class="logo">
+        <h1 class="site-title">Sector-7</h1>
+        <div class="header-actions">
+            <button onclick="toggleTheme()" title="Cambiar entre modo claro/oscuro">Tema</button>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <a href="home.html">Inicio</a>
+        <a href="reports.html">Informes</a>
+        <a href="announcements.html">Anuncios</a>
+        <a href="tools.html" class="active">Herramientas</a>
+        <a href="about.html">Acerca de</a>
+        <a href="/en/partnerships.html">Alianzas</a>
+        <a href="support.html">Soporte</a>
+        <a href="status.html">Estado del sitio</a>
+    </nav>
+
+    <main class="main-page-content">
+        <div class="page-title-container">
+            <h1 class="page-title-main">Herramientas y Recursos</h1>
+        </div>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Herramientas útiles</h2>
+            <ul>
+                <li><a href="https://speed.sector-7.org" target="_blank" rel="noopener noreferrer">Prueba de velocidad</a> para verificar la calidad de tu conexión.</li>
+                <li><a href="https://sector-7.org/en/status.html">Estado del sitio</a> para revisiones de disponibilidad.</li>
+                <li><a href="https://sector-7.org/en/support.html">Centro de soporte</a> con guías y asistencia para reportes.</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2 class="content-section-title">Buscar páginas e informes</h2>
+            <div class="search-bar">
+                <input
+                    type="search"
+                    id="site-search-input"
+                    class="search-input"
+                    data-search-input="site-pages"
+                    placeholder="Buscar páginas o informes..."
+                    aria-label="Buscar páginas o informes">
+            </div>
+            <ul class="search-list" data-search-list="site-pages">
+                <li data-search-tags="inicio portada">
+                    <a href="home.html">Inicio</a> — Resumen principal y novedades.
+                </li>
+                <li data-search-tags="informes reportes">
+                    <a href="reports.html">Informes</a> — Explora reportes publicados.
+                </li>
+                <li data-search-tags="anuncios noticias">
+                    <a href="announcements.html">Anuncios</a> — Actualizaciones de la plataforma.
+                </li>
+                <li data-search-tags="acerca mision">
+                    <a href="about.html">Acerca de</a> — Nuestra misión y principios.
+                </li>
+                <li data-search-tags="soporte ayuda contacto">
+                    <a href="support.html">Soporte</a> — Guías y recursos para denunciantes.
+                </li>
+                <li data-search-tags="estado disponibilidad">
+                    <a href="status.html">Estado del sitio</a> — Revisión de servicios.
+                </li>
+                <li data-search-tags="douma informe">
+                    <a href="read-more-douma.html">Informe Douma</a> — Lee los detalles del informe.
+                </li>
+            </ul>
+            <p class="search-empty" data-search-empty="site-pages" hidden>No se encontraron resultados. Intenta con otra palabra clave.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 Sector-7. Todos los derechos reservados.</p>
+        <nav>
+            <a href="home.html">Inicio</a> | 
+            <a href="reports.html">Informes</a> |
+            <a href="announcements.html">Anuncios</a> |
+            <a href="tools.html">Herramientas</a> |
+            <a href="about.html">Acerca de</a> | 
+            <a href="support.html">Soporte</a> | 
+            <a href="/en/partnerships.html">Alianzas</a> |
+            <a href="status.html">Estado del sitio</a>
+        </nav>
+        <p>
+            Contáctanos mediante nuestra <a href="/en/contact.html" target="_blank" rel="noopener noreferrer">Página de Contacto</a> para conocer los canales de comunicación y opciones de reporte más recientes.
+        </p>
+
+        <p>Nuestra dirección oficial en Onion se encuentra en: 
+            <a href="http://3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion" target="_blank">3exjil7f3mqk7xq7vsjzuvqjir35wsfwmaq5fmoiqptzr2molvbepsqd.onion</a>
+        </p>
+        <p>
+        <a href="/en/policies.html">Políticas</a> | 
+        <a href="/en/terms.html">Términos y Condiciones</a> |
+        <a href="/en/canary.html">Canario de Garantía y Verificación en Blockchain</a>
+      </p>
+    </footer>
+
+    <script src="/assets/script.js" defer></script>
+</body>
+</html>

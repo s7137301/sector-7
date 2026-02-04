@@ -164,6 +164,36 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.querySelector('.navbar') && document.querySelector('.main-page-content')) {
         stickyNav();
     }
+
+    // Search filtering for tools page
+    const searchInputs = document.querySelectorAll('[data-search-input]');
+    if (searchInputs.length > 0) {
+        searchInputs.forEach((input) => {
+            const listId = input.dataset.searchInput;
+            const list = document.querySelector(`[data-search-list=\"${listId}\"]`);
+            const emptyState = document.querySelector(`[data-search-empty=\"${listId}\"]`);
+            if (!list) return;
+            const items = Array.from(list.querySelectorAll('li'));
+
+            const updateResults = () => {
+                const query = input.value.trim().toLowerCase();
+                let visibleCount = 0;
+                items.forEach((item) => {
+                    const tags = (item.dataset.searchTags || '').toLowerCase();
+                    const text = item.textContent.toLowerCase();
+                    const matches = query === '' || text.includes(query) || tags.includes(query);
+                    item.style.display = matches ? '' : 'none';
+                    if (matches) visibleCount += 1;
+                });
+                if (emptyState) {
+                    emptyState.hidden = visibleCount !== 0;
+                }
+            };
+
+            input.addEventListener('input', updateResults);
+            updateResults();
+        });
+    }
 });
 
 // --- STATUS SIMULATION ---
