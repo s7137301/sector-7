@@ -100,7 +100,7 @@ li { margin-bottom: 0.5rem; }
 
 /* === SITE HEADER === */
 .page-main-header {
-    background-color: var(--accent-purple);
+    background: linear-gradient(135deg, #4a256e 0%, #5e3089 50%, #6f3aa0 100%);
     color: white;
     padding: 1rem 2rem;
     display: flex;
@@ -120,7 +120,7 @@ li { margin-bottom: 0.5rem; }
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--accent-purple);
+    background: linear-gradient(135deg, #4a256e 0%, #5e3089 60%, #6f3aa0 100%);
     padding: 0.5rem 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Initial subtle shadow */
     /* Transition for properties that change when it becomes sticky or on hover */
@@ -129,7 +129,8 @@ li { margin-bottom: 0.5rem; }
                 top 0.3s ease-in-out; 
     /* position and z-index will be set when sticky, no transition needed for them directly */
 }
-.navbar a {
+.navbar a,
+.nav-dropdown-toggle {
     color: white;
     text-decoration: none;
     margin: 0 1rem;
@@ -138,11 +139,20 @@ li { margin-bottom: 0.5rem; }
     font-weight: 600;
     transition: color 0.2s ease, border-bottom-color 0.2s ease;
     border-bottom: 3px solid transparent;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
-.navbar a:hover { color: var(--text-dark); border-bottom-color: var(--text-dark); text-decoration: none; }
-body.light-mode .navbar a:hover { color: var(--accent-purple); border-bottom-color: var(--accent-purple); }
-.navbar a.active { color: var(--yellow-highlight); font-weight: 700; border-bottom-color: var(--yellow-highlight); }
-.navbar a.active:hover { color: var(--yellow-highlight-hover); border-bottom-color: var(--yellow-highlight-hover); }
+.navbar a:hover,
+.nav-dropdown-toggle:hover { color: var(--text-dark); border-bottom-color: var(--text-dark); text-decoration: none; }
+body.light-mode .navbar a:hover,
+body.light-mode .nav-dropdown-toggle:hover { color: var(--accent-purple); border-bottom-color: var(--accent-purple); }
+.navbar a.active,
+.nav-dropdown-toggle.active,
+.nav-dropdown-content a.active { color: var(--yellow-highlight); font-weight: 700; border-bottom-color: var(--yellow-highlight); }
+.navbar a.active:hover,
+.nav-dropdown-toggle.active:hover,
+.nav-dropdown-content a.active:hover { color: var(--yellow-highlight-hover); border-bottom-color: var(--yellow-highlight-hover); }
 
 .navbar.sticky {
     position: fixed;
@@ -162,6 +172,54 @@ body.light-mode .navbar a:hover { color: var(--accent-purple); border-bottom-col
     padding: 0 1.5rem;
     /* Smooth transition for padding-top when navbar sticks/unsticks */
     transition: padding-top 0.3s ease-in-out;
+}
+
+.nav-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-dropdown-content {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    min-width: 220px;
+    background-color: var(--card-dark-bg);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-direction: column;
+    padding: 0.5rem;
+    z-index: 999;
+}
+
+body.light-mode .nav-dropdown-content {
+    background-color: var(--card-light-bg);
+    border-color: var(--border-light);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.nav-dropdown-content a {
+    margin: 0;
+    padding: 0.55rem 0.75rem;
+    border-radius: 6px;
+    border-bottom: none;
+}
+
+.nav-dropdown-content a:hover {
+    background-color: rgba(var(--highlight-purple-rgb), 0.15);
+    color: var(--text-dark);
+}
+
+body.light-mode .nav-dropdown-content a:hover {
+    color: var(--accent-purple);
+}
+
+.nav-dropdown:hover .nav-dropdown-content,
+.nav-dropdown:focus-within .nav-dropdown-content {
+    display: flex;
 }
 /* Other .main-page-content styles remain the same */
 .page-title-container { text-align: center; margin-bottom: 2.5rem; }
@@ -262,13 +320,28 @@ body.light-mode .search-empty {
         margin-left: 0;
     }
     .navbar {
-        flex-wrap: wrap;
-        padding: 0.75rem 0.5rem;
-        gap: 0.25rem 0.75rem;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.75rem 0.75rem;
+        gap: 0.35rem;
     }
-    .navbar a {
+    .navbar a,
+    .nav-dropdown-toggle {
         margin: 0;
-        padding: 0.5rem 0.4rem;
+        padding: 0.6rem;
+        width: 100%;
+        text-align: center;
+    }
+    .nav-dropdown {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .nav-dropdown-content {
+        position: static;
+        width: 100%;
+        margin-top: 0.25rem;
+        box-shadow: none;
     }
     .main-page-content {
         margin: 1.5rem auto;
