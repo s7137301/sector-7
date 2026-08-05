@@ -1,142 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-adsense-account" content="ca-pub-3823162250407128">
-  <!-- Basic Metadata -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sector-7 is a lawful NGO platform for public-interest reporting, whistleblower protection, and institutional transparency.">
-<meta name="keywords" content="NGO, public interest, whistleblower, media, transparency, lawful operations, secure platform">
-<meta name="author" content="Sector-7.org Editorial Team">
-
-<!-- OpenGraph Metadata -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sector-7">
-<meta property="og:description" content="Sector-7 is a lawful NGO platform for public-interest reporting and whistleblower protection.">
-<meta property="og:url" content="https://sector-7.org">
-<meta property="og:image" content="https://sector-7.org/static/logo.png"> <!-- Replace with actual logo path -->
-
-<!-- Schema.org Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Sector-7",
-  "url": "https://sector-7.org",
-  "description": "Lawful NGO platform for public-interest reporting, whistleblower protection, and institutional transparency.",
-  "logo": "https://sector-7.org/en/Sector-7.png",
-  "founder": {
-    "@type": "Company",
-    "name": "Sector-7"
-  },
-  "sameAs": []
-}
-</script>
-  <title>Sector-7 | DDOS Protection</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sector-7 is a public-interest whistleblower and transparency platform that publishes anonymous reports, security notices, and accountable public communications.">
+  <meta name="keywords" content="Sector-7, whistleblower, transparency, public interest, anonymous reporting, security, accountability">
+  <meta name="author" content="Sector-7.org Editorial Team">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sector-7 | Public Interest Transparency Platform">
+  <meta property="og:description" content="Explore Sector-7 reports, announcements, security guidance, and public transparency resources.">
+  <meta property="og:url" content="https://sector-7.org/">
+  <meta property="og:image" content="https://sector-7.org/en/Sector-7.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sector-7 | Public Interest Transparency Platform">
+  <meta name="twitter:description" content="Explore Sector-7 reports, announcements, security guidance, and public transparency resources.">
+  <meta name="twitter:image" content="https://sector-7.org/en/Sector-7.png">
+  <link rel="canonical" href="https://sector-7.org/">
+  <link rel="alternate" hreflang="en" href="https://sector-7.org/en/home.html" />
+  <link rel="alternate" hreflang="es" href="https://sector-7.org/es/home.html" />
+  <link rel="alternate" hreflang="fr" href="https://sector-7.org/en/home.html" />
+  <link rel="alternate" hreflang="de" href="https://sector-7.org/en/home.html" />
+  <link rel="alternate" hreflang="zh" href="https://sector-7.org/en/home.html" />
+  <link rel="alternate" hreflang="x-default" href="https://sector-7.org/en/home.html" />
+  <title>Sector-7 | Public Interest Transparency Platform</title>
   <link rel="stylesheet" href="/assets/styles.css">
-</head>
-<body id="turnstile-page">
-  <h1>Sector-7 | DDOS Protection</h1>
-  <form id="turnstile-form" onsubmit="return false;">
-    <p>Complete the CAPTCHA to proceed to Sector-7:</p>
-    <div id="turnstile-widget-container" class="cf-turnstile"
-         data-sitekey="0x4AAAAAABBp8DDATkRt9PbP"
-         data-callback="onTurnstileSuccess"
-         data-error-callback="onTurnstileError"
-         data-expired-callback="onTurnstileExpired">
-    </div>
-    <button type="button" id="captcha-submit-button" disabled>Verifying...</button>
-    <p id="turnstile-message" style="margin-top: 10px; min-height: 1.2em;"></p>
-  </form>
-
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <script>
-    let currentTurnstileToken = null;
-    const submitButton = document.getElementById('captcha-submit-button');
-    const turnstileMessage = document.getElementById('turnstile-message');
-
-    function enableSubmitButton(enable = true, message = "Proceed to Site") {
-      submitButton.disabled = !enable;
-      submitButton.textContent = message;
-    }
-
-    function setTurnstileMessage(message, isError = false) {
-      turnstileMessage.textContent = message;
-      turnstileMessage.style.color = isError ? 'red' : 'limegreen';
-    }
-
-    function getUserLangPath() {
-      const langCode = navigator.language.split('-')[0]; // e.g., "en", "es"
-      const supported = ['en', 'es', 'fr', 'de', 'zh']; // add more supported languages here
-      const fallback = 'en';
-      return supported.includes(langCode) ? langCode : fallback;
-    }
-
-    async function onTurnstileSuccess(token) {
-      currentTurnstileToken = token;
-      enableSubmitButton(true, "Verifying...");
-      setTurnstileMessage("CAPTCHA passed. Verifying...");
-
-      try {
-        const response = await fetch('https://sector7-turnstile-verifier.wampired2.workers.dev/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ "cf-turnstile-response": currentTurnstileToken })
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-          setTurnstileMessage("Verification successful! Redirecting...");
-          enableSubmitButton(false, "Redirecting...");
-          const lang = getUserLangPath();
-          window.location.href = `/${lang}/home.html`;
-        } else {
-          setTurnstileMessage("CAPTCHA verification failed. Try again.", true);
-          console.error('Turnstile failed:', result.errors);
-          enableSubmitButton(true, "Retry");
-          resetTurnstileWidget();
-        }
-      } catch (error) {
-        setTurnstileMessage("Error verifying CAPTCHA.", true);
-        console.error('Verification error:', error);
-        enableSubmitButton(true, "Retry");
-        resetTurnstileWidget();
-      }
-    }
-
-    function onTurnstileError(errCode) {
-      currentTurnstileToken = null;
-      setTurnstileMessage(`CAPTCHA error (${errCode}).`, true);
-      enableSubmitButton(false, "Error");
-    }
-
-    function onTurnstileExpired() {
-      currentTurnstileToken = null;
-      setTurnstileMessage("CAPTCHA expired. Try again.", true);
-      enableSubmitButton(false, "Expired");
-      resetTurnstileWidget();
-    }
-
-    function resetTurnstileWidget() {
-      if (typeof turnstile !== 'undefined') {
-        turnstile.reset('#turnstile-widget-container');
-        enableSubmitButton(false, "Verifying...");
-      }
-    }
-
-    submitButton.addEventListener('click', () => {
-      if (!submitButton.disabled && currentTurnstileToken) {
-        onTurnstileSuccess(currentTurnstileToken);
-      }
-    });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(() => console.log('Service Worker registered'))
-        .catch(e => console.error('SW registration failed:', e));
-    }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Sector-7",
+    "url": "https://sector-7.org",
+    "description": "Sector-7 is a public-interest whistleblower and transparency platform focused on secure reporting, accountability, and responsible publication.",
+    "logo": "https://sector-7.org/en/Sector-7.png",
+    "sameAs": [
+      "https://sector-7.org/en/support.html",
+      "https://sector-7.org/en/partnerships.html"
+    ]
+  }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Sector-7",
+    "url": "https://sector-7.org/"
+  }
+  </script>
+</head>
+<body>
+  <div id="notice-banner" class="banner">
+    <p>For enhanced security and anonymity, we recommend accessing this site via the Tor Browser.
+      <a href="https://www.torproject.org/download/" target="_blank" rel="noopener noreferrer">Download Tor Browser</a>.
+    </p>
+  </div>
+
+  <header class="page-main-header">
+    <img src="/en/Sector-7.png" alt="Sector-7 Logo" class="logo" width="120" height="120">
+    <h1 class="site-title">Sector-7</h1>
+    <div class="header-actions">
+      <button onclick="toggleTheme()" title="Toggle Light/Dark Mode">Theme</button>
+    </div>
+  </header>
+
+  <nav class="navbar">
+    <a href="/en/home.html" class="active">Home</a>
+    <a href="/en/reports.html">Reports</a>
+    <a href="/en/announcements.html">Announcements</a>
+    <a href="/en/about.html">About</a>
+    <a href="/en/partnerships.html">Partnerships</a>
+    <a href="/en/support.html">Support</a>
+    <a href="/en/status.html">Website Status</a>
+  </nav>
+
+  <main class="main-page-content">
+    <div class="page-title-container">
+      <h1 class="page-title-main">Empowering Transparency</h1>
+    </div>
+
+    <section class="content-section">
+      <h2 class="content-section-title">Welcome to Sector-7</h2>
+      <p>Sector-7 is a public-interest transparency platform focused on secure reporting, accountability, and open public communication. We provide a trusted environment for whistleblowers, journalists, researchers, and partners who need a safer path to share sensitive information responsibly.</p>
+    </section>
+
+    <section class="content-section">
+      <h2 class="content-section-title">Latest Announcements</h2>
+      <div class="list-entry">
+        <span class="entry-date">[2025-10-18]</span>
+        <div class="entry-text">
+          <h3 class="entry-title">Official migration to sector-7.org</h3>
+          <p>All official communications now use the sector-7.org domain. Please update your records and direct inquiries to the new official channels.</p>
+          <div class="entry-actions">
+            <a href="/en/announcements.html" class="button-link secondary">More info...</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2 class="content-section-title">Why Use Our Platform?</h2>
+      <ul>
+        <li><strong>Anonymity:</strong> Our ecosystem is built around privacy-preserving workflows and secure communications.</li>
+        <li><strong>Transparency:</strong> Reports and public statements are published to support informed public oversight.</li>
+        <li><strong>Security:</strong> A layered approach to protection helps keep the platform resilient and trustworthy.</li>
+      </ul>
+    </section>
+
+    <section class="content-section" id="faq-section">
+      <h2 class="content-section-title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <button class="faq-question">What is Sector-7?<span class="arrow">▾</span></button>
+        <div class="faq-answer">
+          <p>Sector-7 is a public-interest transparency and whistleblower support platform designed to create a more secure path for responsible disclosure.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">How can I submit a report?<span class="arrow">▾</span></button>
+        <div class="faq-answer">
+          <p>Review the guidance on the <a href="/en/reports.html">Reports</a> page and use our verified support pathways for secure communication.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 Sector-7. All rights reserved.</p>
+    <nav>
+      <a href="/en/home.html">Home</a>
+      <a href="/en/reports.html">Reports</a>
+      <a href="/en/announcements.html">Announcements</a>
+      <a href="/en/about.html">About</a>
+      <a href="/en/support.html">Support</a>
+      <a href="/en/partnerships.html">Partnerships</a>
+      <a href="/en/status.html">Website Status</a>
+    </nav>
+    <p><a href="/en/contact.html">Contact Page</a> | <a href="/en/policies.html">Policies</a> | <a href="/en/terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+  <script src="/assets/script.js" defer></script>
 </body>
 </html>
 
