@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sector-7.org/sitemap.xml
