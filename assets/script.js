@@ -1,3 +1,15 @@
+// --- MICROSOFT CLARITY ---
+(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){
+        (c[a].q=c[a].q||[]).push(arguments)
+    };
+    t=l.createElement(r);
+    t.async=true;
+    t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+    y=l.getElementsByTagName(r)[0];
+    y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "xxvyn13jo7");
+
 // --- THEME TOGGLE ---
 function toggleTheme() {
     const body = document.body;
@@ -228,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
           button: "Cambiar a Español"
         }
       };
-  
+
       const msg = messages[lang];
       const popup = document.createElement('div');
       popup.className = 'lang-popup';
