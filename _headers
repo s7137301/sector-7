@@ -1,6 +1,2 @@
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' https://challenges.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://sector7-turnstile-verifier.wampired2.workers.dev https://challenges.cloudflare.com; font-src 'self' data:; frame-src https://challenges.cloudflare.com; form-action 'self'; upgrade-insecure-requests
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), microphone=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com https://fundingchoicesmessages.google.com 'unsafe-inline'; connect-src 'self' https://sector7-turnstile-verifier.wampired2.workers.dev https://challenges.cloudflare.com https://static.cloudflareinsights.com https://fundingchoicesmessages.google.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src https://challenges.cloudflare.com https://fundingchoicesmessages.google.com; object-src 'none'; base-uri 'self'; form-action 'self';
