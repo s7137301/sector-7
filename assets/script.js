@@ -9,7 +9,22 @@
     y=l.getElementsByTagName(r)[0];
     y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "xxvyn13jo7");
+// --- GOOGLE ---
+const script = document.createElement('script');
 
+script.async = true;
+script.src = 'https://www.googletagmanager.com/gtag/js?id=G-CRGYS62L60';
+
+document.head.appendChild(script);
+
+window.dataLayer = window.dataLayer || [];
+
+function gtag() {
+  dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+gtag('config', 'G-CRGYS62L60');
 // --- THEME TOGGLE ---
 function toggleTheme() {
     const body = document.body;
